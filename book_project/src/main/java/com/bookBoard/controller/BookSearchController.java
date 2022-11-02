@@ -16,7 +16,7 @@ import com.member.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
 
-
+// 주석
 @Controller
 @RequestMapping("/search/*")
 @Log4j
