@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- spring security 설정 관련 파일 :: ★아래 구조가 가장 기본적인 구조이므로 아래 태그들까지 설정해야함!★ -->
+	
+	
+	
+	<!-- 접근 제한시 처리할 핸들러 빈으로 등록 -->
+	<bean id="customAccessDenied" class="com.member.service.CustomAccessDeniedHandler" />
+	<!--  비밀번호 보호를 위한 암호화 클래스 빈으로 등록 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!-- 시큐리티에서 우리가 원하는 형태의 회원테이블로 처리되기 위한 클래스 빈으로 등록 -->
+	<bean id="customUserDetailsService" class="com.member.service.CustomUserDetailsService"/>
+	<!-- 로그인 성공시 처리 핸들러 등록 -->
+	<bean id="loginSuccessHandler" class="com.member.service.CustomLoginSuccessHandler"/>
+	<!-- 로그인 실패시 처리 핸들러 등록 -->
+	<bean id="loginFailHandler" class="com.member.service.LoginFailHandler" />
+	<!-- 로그아웃 성공시 처리 핸들러 등록  -->
+	<bean id="logoutSuccesshandler" class="com.member.service.CustomLogoutSuccessHandler" />  
+
+
+
+	<!-- 접근 제한 설정 -->
+	<security:http>
+		<!-- 특정 uri에 접근 제한 설정 -->
+		<security:intercept-url pattern="/main/mbti" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/memData/bookPLDetailModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/memData/bookPlistMakeForm" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/gSentence/greatSentenceForm" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/gSentence/greatSentenceModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/mypage/memMypage" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/mypage/adminMypage" access="hasRole('ROLE_ADMIN')"/>
+		
+	<!--  접근 제한시 403 페이지 대신 보여줄 페이지 셋팅 
+	<security:access-denied-handler error-page="/common/accessError" />	-->
+	<!--  아래 bean 적용하면, 접근 제한시 처리해야하는 핸들러가 자동으로 실행 됨 -->
+	<security:access-denied-handler ref="customAccessDenied"/>
+		
+		
+	<!--  시큐리티 로그인 페이지를 커스텀 경로로 변경(우리가 만든 로그인폼 경로) -->
+	<security:form-login login-page="/main/main" authentication-success-handler-ref="loginSuccessHandler"  authentication-failure-handler-ref="loginFailHandler" />
+	
+	<!-- 시큐리티로 로그아웃 처리 -->
+	<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSION_ID, remember-me" success-handler-ref="logoutSuccesshandler"/>
+
+	<!-- 자동로그인 처리 : 
+		data-source-ref : DB에 접근가능한 DataSource를 지정, 테이블 이용해 로그인 정보 접근(root-context.xml에 지정해준 dataSource 가져오기)
+		token-validity-seconds : 쿠키의 유효시간을 지정해주는 속성 60 * 60 * 24 * 7 (= 일주일 = 604800초)-->
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+
+	<!--  csrf 비활성화 (보안적으로 나쁨) 
+	<security:csrf disabled="true"/> -->
+
+
+	</security:http>
+
+	<!-- 인증과 권한 처리해주는 태그 -->
+	<security:authentication-manager>
+		<!-- 권한에 대한 인증 해주는 authenticationProvider -->		
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+	
+	</security:authentication-manager>
+
+
+
+</beans>

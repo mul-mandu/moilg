@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.member.persistence.MemberMapper">
+  
+  <insert id="addMember">
+        insert into memberSignup(name, id, pw, nickName, email, birth, gender) 
+        values(#{name}, #{id}, #{pw}, #{nickName}, #{email}, #{birth, jdbcType=VARCHAR}, #{gender})
+  </insert>
+  
+  
+  <insert id="addAuth">
+        insert into memberSignup_auth values(#{id}, #{auth})
+  </insert>
+  
+
+<!--     MemberVO 안에 컬렉션 List가 있으므로 DB select 문 날려서 가져오는 결과물 MemberVO안에 잘 바인딩 시키고, 결과물을 리턴 해주기위해   -->
+<!--   result 리턴 타입인 MemberVO 타입을 mybatis에서 잘 처리되도록 새로 정의하기 : resultMap 태그  사용  -->
+<!--     회원정보테이블의 데이터를 MemberVO의 변수에 각각 잘 바인딩되도록 변수에 대입할  컬럼 명확히 정의  -->
+     <resultMap type="com.member.domain.MemberVO" id="memberMap">
+         <id property="id" column="id"/>
+         <result property="name" column="name" />
+         <result property="pw" column="pw" />
+         <result property="nickName" column="nickName" />
+         <result property="email" column="email" />
+         <result property="birth" column="birth" />
+         <result property="gender" column="gender" />
+         <result property="photo" column="photo" />
+         <result property="bgImg" column="bgImg" />
+         <result property="mbti" column="mbti" />
+         <result property="memStatus" column="memStatus" />
+         <result property="enabled" column="enabled" />
+         <collection property="authList" resultMap="authMap"></collection>
+      </resultMap>
+<!--       권한 테이블 값을 AuthVO 클래스에 대입하는것 명확히 정의  -->
+      <resultMap type="com.member.domain.AuthVO" id="authMap">
+         <result property="id" column="id" />
+         <result property="auth" column="auth" />
+      </resultMap>
+      
+      <select id="getMember" resultMap="memberMap">
+         select m.*, a.auth 
+         from memberSignup m, memberSignup_auth a 
+         where m.id = a.id
+         and m.id = #{id}
+      </select>
+
+  
+ 
+ 
+  <!-- 관심사 설정 
+    <insert id="addInter">
+        insert into memberSignupInter(keyword_no) 
+        values(#{id}, #{keyword_no})
+  </insert>
+  -->
+  
+  <!-- 관심사 설정 -->
+  <insert id="insertInter" parameterType="map">
+      insert into memberSignupInter(id, keyword_no) 
+      values(#{id}, #{keyword_no})
+  </insert>
+  
+  
+  
+  <!-- 멤버 mbti 등록(update) -->
+  <update id="updateMemMbti">
+       update memberSignup SET mbti=#{mbti} 
+       where id=#{id} 
+  </update>
+  
+  
+  <!-- 멤버 프로필 등록 -->
+  <update id="updateProfile">
+      update memberSignup SET photo=#{photo} where id=#{id}
+  </update>
+  
+  <!-- 마이페이지 배경 등록 -->
+  <update id="updateBgImg">
+      update memberSignup SET bgImg=#{bgImg} where id=#{id}
+  </update>
+  
+  
+    <!-- mbti에 해당하는 회원 id 가져오기 -->
+  <select id="getMbtiMem" resultType="String">
+     select id from memberSignup where mbti=#{mbti}
+  </select>
+  
+  
+    <!--  mbti에 맞는 회원의 공개 북플리 가져오기 -->
+   <select id="mbtiOpenList" resultType="com.member.domain.BookListVO">
+      select * from BookList where id=#{id} and listStatus=0 order by list_no desc 
+  </select>
+  
+  
+    <!-- 내 관심사(키워드) 리스트 가져오기 -->
+  <select id="selectMyInterList" resultType="Integer">
+        select keyword_no from memberSignupInter where id=#{id}
+  </select>
+  
+  
+  
+    <!-- 키워드 넘버 주고 북플리 list no 가져오기 -->
+  <select id="selectListNoList" resultType="Integer">
+     select list_no from BookPLKeyword where keyword_no=#{keyword_no}
+  </select>
+  
+  
+  
+  <!-- 키워드 넘버 주고 북플리List 가져오기 (장르) -->
+  <select id="selectGBookList" resultType="com.member.domain.BookListVO">
+   select * from BookList where listStatus=0
+   <if test="list != null">
+       and list_no in 
+   <foreach collection="list" item="item" open="(" close=")" separator=",">
+      #{item}
+   </foreach>
+   </if>
+  </select>
+  
+  
+  
+  
+  <!-- 아이디 찾기 -->
+  <select id="findId"  resultType="String">
+     select id from memberSignup where name=#{name} and email=#{email}
+  </select>
+  
+  
+  <!-- 비밀번호 찾기 -->
+  <select id="findPw" resultType="String">
+   select pw from memberSignup where  name=#{name} and email=#{email} and id=#{id}
+  </select>
+  
+  
+  <!-- id 중복확인  -->
+  <select id="idCheck" resultType="int">
+     select count(*) from memberSignup where id=#{id}
+  </select>
+  
+  
+    <!-- 닉네임 중복확인  -->
+  <select id="nickNameCheck" resultType="int">
+     select count(*) from memberSignup where nickName=#{nickName}
+  </select>
+  
+  
+  <!-- 회원정보 수정 요청 -->
+   <update id="memberModify">
+      update memberSignup set pw=#{pw}, nickName=#{nickName}, email=#{email}
+      <if test="birth != null">
+         ,birth = #{birth}
+      </if>
+      where id=#{id}
+   </update>
+  
+  <!-- 회원정보 수정 요청 (비밀번호만)-->
+   <update id="memberPwModi">
+      update memberSignup set pw=#{pw}
+      where id=#{id}
+   </update>
+  
+  
+  <!-- 회원 탈퇴 요청 -->
+   <update id="deleteMember">
+      update memberSignup set memStatus=0
+      where id=#{id}
+   </update>
+   
+   <!-- 탈퇴 회원 권한 변경 -->
+   <update id="updateAuth">
+      update membersignup_auth set auth='ROLE_DELMEM' 
+      where id=#{id}
+   </update>
+   
+   
+  <!-- 모든 회원 정보 가져오기 -->
+  <select id="selectAllMember" resultType="com.member.domain.MemberVO">
+     select * from memberSignup 
+  </select>
+  
+  <!-- 모든 회원 정보 가져오기 -->
+  <select id="selectMemAuth" resultType="String">
+     select auth from memberSignup_auth where id=#{id}
+  </select>
+  
+  
+ 
+  
+<!--   <update id="updateMember"> -->
+<!--         update memberSec set name=#{name}, email=#{email} -->
+<!--         where id =#{id} -->
+<!--   </update> -->
+  
+  
+<!--   <delete id="deleteMember"> -->
+<!--         delete from memberSec where id =#{id} -->
+<!--   </delete> -->
+  
+<!--   <delete id="deleteAuth"> -->
+<!--         delete from memberSec_auth where id =#{id} -->
+<!--   </delete> -->
+  
+  
+<!--   <select id="idpwCheck" resultType="int"> -->
+<!--         select count(*) from memberSec where id=#{id} -->
+<!--         <if test="pw != null"> -->
+<!--         and pw =#{pw} -->
+<!--         </if> -->
+<!--   </select> -->
+  
+  
+     <!-- 북리스트 생성  -->
+     <insert id="addBookList">
+        insert into BookList(list_no, bookPLTitle, id, packCover, listStatus)
+        values(list_no_seq.nextval, #{bookPLTitle}, #{id}, #{packCover}, #{listStatus})
+     </insert>
+     
+  
+    <!-- 북플리 패키지 추가 -->
+    <insert id="insertBookPackage">
+       insert into BookList(list_no, bookPLTitle, id, mbti, packCover, listStatus)
+       values(list_no_seq.nextval, #{bookPLTitle}, #{id}, #{mbti}, #{packCover}, #{listStatus})
+    </insert>
+  
+
+   <!-- 북플리 패키지 수정 -->
+   <update id="modifyBookPackage">
+      update BookList set bookPLTitle=#{bookPLTitle}, packCover=#{packCover}, listStatus=#{listStatus} where list_no=#{list_no}
+   </update>
+
+
+   <!--oneBookList 추가  -->
+   <insert id="addOneBookList">
+      <selectKey keyProperty="list_no" order="BEFORE" resultType="int">
+         SELECT (LAST_NUMBER)-1 FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'LIST_NO_SEQ'
+      </selectKey>
+         insert into OneBookList(list_no, isbn, bookTitle, author, bookCover)
+         values(#{list_no}, #{isbn}, #{bookTitle}, #{author}, #{bookCover})
+   </insert>
+  
+  
+  
+  <!-- 북리스트에 키워드 추가
+  <selectKey keyProperty="list_no" order="BEFORE" resultType="int">
+           SELECT (LAST_NUMBER)-1 FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'LIST_NO_SEQ'
+        </selectKey>
+   -->
+  <insert id="addPLKeyWord">
+     insert into BookPLKeyword(list_no, keyword_no)
+     values(#{list_no}, #{keyword_no})
+  </insert>
+  
+  <select id="getListNoCurrSeq" resultType="int">
+     SELECT (LAST_NUMBER)-1 FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'LIST_NO_SEQ'
+  </select>
+  
+  
+  
+  
+  <!-- 북리스트 1개의 값 가져오기 -->
+   <select id="getOneBookList" resultType="com.member.domain.BookListVO">
+      select * from BookList where list_no=#{list_no}
+   </select>
+  
+  
+  <!-- 북리스트에 해당하는 책들 가져오기  -->
+  <select id="getPLBooksList" resultType="com.member.domain.OneBookListVO">
+        select * from OneBookList where list_no=#{list_no}
+  </select>
+  
+  <!-- 북리스트에 해당하는 키워드들 가져오기  -->
+  <select id="getPLKeyword" resultType="int">
+        select keyword_no from BookPLKeyword where list_no=#{list_no}
+  </select>
+  
+  
+  <!-- 키워드에 해당하는 VO 가져오기 -->
+  <select id="getKeywordVOList" resultType="com.bookBoard.domain.keywordVO">
+        select * from keyword where keyword_no=#{keyword_no}
+  </select>
+  
+  <!-- 북플리 수정 -->
+  <update id="modifyBookList" >
+     update BookList set bookPLTitle=#{bookPLTitle}, packCover=#{packCover}, listStatus=#{listStatus} where list_no=#{list_no}
+  </update>
+  
+  
+  <!-- 북플리에 있는 책 내역들 삭제  -->
+   <delete id="deleteOneBookList">
+      delete from OneBookList where list_no = #{list_no}
+   </delete>
+  
+  
+  <!-- 북플리에 있는 책 수정 하기 (삭제하고 또 만들어서 인서트)   -->
+  <insert id="ModifyOneBookList">
+     insert into OneBookList(list_no, isbn, bookTitle, author, bookCover)
+     values(#{list_no}, #{isbn}, #{bookTitle}, #{author}, #{bookCover})
+  </insert>
+  
+  
+  
+  <!-- 북플리에 있는 키워드 삭제 -->
+  <delete id="deleteKeywordList">
+     delete from BookPLKeyword where list_no = #{list_no}
+  </delete>
+  
+  <!-- 북플리 삭제 -->
+   <update id="deleteBookList">
+     update BookList set listStatus= -1 where list_no=#{list_no}
+  </update>
+  
+  <!-- 북플리 수정 (삭제후 다시 생성) -->
+   <insert id="modifyPLKeyWord">
+        insert into BookPLKeyword(list_no, keyword_no)
+        values(#{list_no}, #{keyword_no})
+  </insert>
+  
+  
+  <!-- 북플리 찜하기  -->
+  <insert id="addScrapRDList">
+        insert into scrapRDList(id, list_no)
+        values(#{id}, #{list_no})
+  
+  </insert>
+  
+  
+  <!-- 북플리 찜하기 해제  -->
+  <delete id="cancelScrapRDList">
+     delete from scrapRDList where list_no = #{list_no} and id=#{id}
+  </delete>
+  
+  
+  
+  <!-- 북플레이 리스트에 도서 추가  -->
+  <insert id="addSavePlBooks">
+     insert into OneBookList(list_no, isbn, bookTitle, author, bookCover)
+     values(#{list_no}, #{isbn}, #{bookTitle}, #{author}, #{bookCover})
+  </insert>
+  
+  
+   <!-- 모달에서 북리스트 생성  -->
+  <insert id="newBookList">
+     insert into BookList(list_no, id, bookPLTitle, listStatus, packCover)
+     values(list_no_seq.nextval, #{id}, #{bookPLTitle}, #{listStatus}, #{packCover})
+  </insert>
+  
+  
+    <!-- 이 책이 포함된 플레이 리스트 가져오기  -->
+  <select id="getIncludBook" resultType="int">
+     select list_no from OneBookList where isbn=#{isbn}
+  </select>
+  
+    
+  <!-- 관리자가 만든 플리이리스트 번호들 가져오기  -->
+   <select id="getPLNumList" resultType="com.member.domain.BookListVO">
+     select * from BookList where id=#{id} and listStatus=0 order by list_no desc
+  </select>
+  
+  
+  <!-- mbti에 해당하는 북플리 가져오기 -->
+  <select id="getMbtiPLlist" resultType="com.member.domain.BookListVO">
+  		select * from BookList where listStatus=0 and mbti=#{mbti} order by list_no desc
+  </select>
+  </mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.sentence.persistence.GreatMapper">
+   
+   
+   <!-- 인생문장 추가 -->
+    <insert id="addSenten">
+  		insert into greatSentence(great_no, id, greatContent, greatImg) 
+  		values(great_no_seq.nextval, #{id}, #{greatContent}, #{greatImg})
+  	</insert>
+  	
+  	
+  	 <!-- id에 맞는 인생문장 가져오기 -->
+     <select id="getAllMemSen" resultType="com.sentence.domain.SentenceVO">
+        select * from greatSentence where id=#{id}
+     </select>
+  
+  
+  
+  <!-- 인생문장 모두 가져오기 
+	<resultMap type="com.sentence.domain.SentenceVO" id="sentenceMap">
+		<id property="id" column="id"/>
+		<result property="id" column="id" />
+		<result property="great_no" column="great_no" />
+     	<result property="greatContent" column="greatContent" />
+      	<result property="greatImg" column="greatImg" />
+      	<result property="greatLikeCount" column="greatLikeCount" />
+      	<result property="greatContentStatus" column="greatContentStatus" />
+      	<result property="greatReg" column="greatReg" />
+      	<collection property="nickName" resultMap="memberMap"></collection>
+	</resultMap>
+   <resultMap type="com.member.domain.MemberVO" id="memberMap">
+      <result property="id" column="nickName" />
+      <result property="nickName" column="nickName" />
+   </resultMap> -->
+  
+  <!-- 모든 인생문장 가져오기 -->
+  <select id="getAllSenten" resultType="com.sentence.domain.SentenceVO" >
+	  	select g.*, m.nickName 
+	  	from greatSentence g, memberSignup m 
+	  	where g.id = m.id 
+	  	and greatContentStatus = 1
+	  	order by greatReg DESC  
+  </select>
+  	
+  	
+
+  	
+  	
+  </mapper>

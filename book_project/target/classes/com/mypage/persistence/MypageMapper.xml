@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mypage.persistence.MypageMapper">
+  
+  <select id="bookPlistCount" resultType="int">
+     select count(*) from BookList where id=#{id} and (listStatus=0 or listStatus=1) 
+  
+  </select>
+  
+  
+  <select id="getMyBookPLlist" resultType="com.member.domain.BookListVO">
+      select * from BookList where id=#{id} and (listStatus=0 or listStatus=1)  order by list_no desc 
+  </select>
+  
+
+    <!-- 읽고 싶은 책 DB에 넣기 -->
+  <insert id="addWantBookData">
+     insert into wantBook(wantBook_no, id, isbn, bookTitle, author, bookCover)
+     values (wantBook_no_seq.nextval, #{id}, #{isbn}, #{bookTitle}, #{author}, #{bookCover})
+  </insert>
+  
+  
+  <!-- 읽고 싶은 책 해제 -->
+  <delete id="cancelWantBook">
+     delete from wantBook where isbn= #{isbn} and id=#{id}
+  </delete>
+  
+  <!-- 읽고 싶은 책 DB리스트 가져오기 -->
+  <select id="wantBookListSelect" resultType="com.mypage.domain.WantBookVO">
+     select * from wantBook where id=#{id} order by wantBook_no desc
+  </select>
+  
+  <!-- 읽은 책 DB에 넣기 -->
+  <insert id="finishBookData">
+     insert into finBook(finBook_no, id, isbn, bookTitle, author, bookCover)
+     values (finBook_no_seq.nextval, #{id}, #{isbn}, #{bookTitle}, #{author}, #{bookCover})
+  </insert>
+  
+  
+  <!-- 읽고 싶은 책 해제 -->
+  <delete id="cancelFinRead">
+     delete from finBook where isbn= #{isbn} and id=#{id}
+  </delete>
+  
+  
+  <!-- 읽은 책 DB리스트 가져오기 -->
+  <select id="finBookListSelect" resultType="com.mypage.domain.FinBookVO">
+     select * from finBook where id=#{id} order by finBook_no desc
+  </select>
+  
+  <!-- 읽은 책 갯수 가져오기 -->
+  <select id="getCountReadBook" resultType="int">
+     select count(*) from finBook where id=#{id}
+  </select>
+  
+  <!-- 찜한 리스트 가져오기  -->
+  <select id="getMyscrapRDList" resultType="int">
+     select list_no from scrapRDList where id=#{id} order by list_no desc
+  </select>
+  
+  
+  
+  
+  
+  </mapper>
