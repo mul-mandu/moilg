@@ -4,6 +4,7 @@
     <!-- header 복붙 -->
 <%@ include file="../includes/header.jsp" %>
 	<br/>
+	<!-- 이게 피자입니다 -->
 	<h4>인생 문장</h4>
 	<!-- 제발 되라 git -->
 	<hr role="tournament4">
