@@ -5,6 +5,7 @@
 <%@ include file="../includes/header.jsp" %>
 	<br/>
 	<h4>인생 문장</h4>
+	<!-- 제발 되라 git -->
 	<hr role="tournament4">
 		<div>
 			<h5 align="center">🏆BEST🏆</h5>
