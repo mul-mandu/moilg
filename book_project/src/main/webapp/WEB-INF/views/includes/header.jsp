@@ -132,7 +132,7 @@
       style="grid-template-columns: 1fr 8fr;">
 
       <div class="col-md-2">
-         <a href="/main/main"><img src="/resources/img/logo_kr.png" class="bi me-2" width="120px" role="img" aria-label="logo" /></a>
+         <a href="/main/main"><img src="/resources/img/logo_title-05.png" class="bi me-2" width="120px" role="img" aria-label="logo" /></a>
       </div>
       <div class="d-flex align-items-center">
          <form class="w-100 me-3" role="search">
