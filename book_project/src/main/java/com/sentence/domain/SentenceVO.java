@@ -15,5 +15,7 @@ public class SentenceVO {
 	private int greatContentStatus;
 	private Date greatReg;
 	private String nickName;
+	private String greatIsbn;
+	private String greatBookTitle;
 
 }

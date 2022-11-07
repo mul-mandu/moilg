@@ -8,8 +8,8 @@
    
    <!-- 인생문장 추가 -->
     <insert id="addSenten">
-  		insert into greatSentence(great_no, id, greatContent, greatImg) 
-  		values(great_no_seq.nextval, #{id}, #{greatContent}, #{greatImg})
+  		insert into greatSentence(great_no, id, greatContent, greatImg, greatIsbn, greatBookTitle) 
+  		values(great_no_seq.nextval, #{id}, #{greatContent}, #{greatImg}, #{greatIsbn}, #{greatBookTitle})
   	</insert>
   	
   	

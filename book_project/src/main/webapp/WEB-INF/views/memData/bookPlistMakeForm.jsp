@@ -93,7 +93,7 @@
          <br/>
          <div style="text-align: center">
              <p style="color: #9e9e9e; text-align: center">* 도서는 최대 10개까지 설정 가능합니다.</p>
-            <button id="addbook" type="button" data-bs-target="#findBookModalToggle" data-bs-toggle="modal" class="btn btn-outline-secondary mx-auto" style="margin: 0 auto; display :inline-block;">+ 도서 추가</button>
+            <button id="addbook" type="button" data-bs-target="#findBookModalToggle" data-bs-toggle="modal" class="btn btn-outline-secondary mx-auto" >+ 도서 추가</button>
       
             <br/>
             <br/>
