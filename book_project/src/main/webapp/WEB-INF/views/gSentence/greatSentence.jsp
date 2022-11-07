@@ -92,16 +92,15 @@
 					<div class="userPickSTC_item">
 						<c:choose>
 							<c:when test="${list.greatImg == null}">
-								<img class="userPickSTC_img"
-									src="/resources/img/greatDefaultImg.jpg">
+								<img class="userPickSTC_img" src="/resources/img/greatDefaultImg.jpg">
 							</c:when>
 							<c:otherwise>
-								<img class="userPickSTC_img"
-									src="/resources/save/${list.greatImg}" />
+								<img class="userPickSTC_img" src="/resources/save/${list.greatImg}" />
 							</c:otherwise>
 						</c:choose>
 						<br />
 						<p class="userPickSTC_text">${list.greatContent}</p>
+						<span id="greatbookT"> ${list.greatBookTitle} 中</span>
 						<br /> <span>By. ${list.nickName }</span>
 						<span style="font-weight: bold; color: grey; font-size: 16px; float: right;">공감수0</span>
 					</div>

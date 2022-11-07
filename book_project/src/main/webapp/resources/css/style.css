@@ -302,6 +302,7 @@ input::-moz-placeholder {
 	object-fit: cover;
 	border-radius: 5px;
 	margin: 2px;
+	margin-bottom: 9px;
 }
 
 .userPickSTC_text {
@@ -535,8 +536,8 @@ table#listTable {
 }
 
 .bPlistCover {
-	width: 340px;
-	height: 400px;
+	width: 300px;
+	height: 360px;
 	overflow: hidden;
 	object-fit: cover;
 	border-radius: 15px;
@@ -1173,4 +1174,15 @@ textarea#book_replyArea {
 
 #bookDTL_btn2 {
 	margin: 4px;
+}
+
+#addbook {
+	margin: 0 auto; 
+	display :inline-block;
+}
+
+#greatbookT{
+	font-size: 15px;
+	color: #8f8f8f;
+	float: right;
 }
