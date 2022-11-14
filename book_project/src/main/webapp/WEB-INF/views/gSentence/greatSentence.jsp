@@ -20,7 +20,6 @@
 						당신의 노력은 절대로 쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요. 
 						마지막의 마지막 순간까지 믿어야합니다. - 나미야 잡화점의 기적 中 당신의 노력은 
 						절대로 쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요.
-						나미야 잡화점의 기적 중
 					</p>
 					<span>나미야 잡화점의 기적 중</span>
 					<br />
@@ -33,15 +32,14 @@
 			
 			<div class="col-4">
 				<div class="userPickSTC_item">
-					<img class="userPickSTC_img" src="/resources/img/autumn.jpg">
+					<img class="userPickSTC_img" src="/resources/img/sea.jpg">
 					<br/>
 					<p class="userPickSTC_text">
-						당신의 노력은 절대로 쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요. 
-						마지막의 마지막 순간까지 믿어야합니다. - 나미야 잡화점의 기적 中 당신의 노력은 
-						절대로 쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요.
-						나미야 잡화점의 기적 중
+						"The bird fights its way out of the egg. The egg is the world.
+						Who would be born must first destroy a world". <br/>
+						새는 알에서 나오기 위해 투쟁한다. 알은 세계다. 태어나려고 하는 이는 먼저 세계를 파괴해야한다.
 					</p>
-					<span>나미야 잡화점의 기적 중</span>
+					<span>데미안 中</span>
 					<br />
 					<span>by. user_name</span>
 					<span style="font-weight: bold; color: grey; font-size: 16px; float: right;">
@@ -52,15 +50,18 @@
 			
 			<div class="col-4">
 				<div class="userPickSTC_item">
-					<img class="userPickSTC_img" src="/resources/img/autumn.jpg">
+					<img class="userPickSTC_img" src="/resources/img/friend-ed.jpg">
 					<br/>
-					<p class="userPickSTC_text">
-						당신의 노력은 절대로 쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요. 
-						마지막의 마지막 순간까지 믿어야합니다. - 나미야 잡화점의 기적 中 당신의 노력은 
-						절대로 쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요.
-						나미야 잡화점의 기적 중
+					<p class="userPickSTC_text"> 
+						우리는 그날 복숭아 빛 하늘을 걸었다. <br/>
+						사람들은 우리를 절친한 친구관계라고 정의했다.
+						그렇다면 짝사랑보다 짝우정이 힘든게 아닐까
+						<br/>
+						<br/>
+						&nbsp; 
+						
 					</p>
-					<span>나미야 잡화점의 기적 중</span>
+					<span>작자 미상 中</span>
 					<br />
 					<span>by. user_name</span>
 					<span style="font-weight: bold; color: grey; font-size: 16px; float: right;">

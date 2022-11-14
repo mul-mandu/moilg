@@ -935,6 +935,7 @@
          var listTitle = $("#bookPLtitle").val();
          var status =  parseInt($("#listStatus").val());
          var createPL = {"id" : id, "bookPLTitle" : listTitle, "listStatus" : status};
+         console.log("새북플리 상태값 : " + status);
          console.log("새 플레이리스트 생성 요청 : " + createPL );
          
          

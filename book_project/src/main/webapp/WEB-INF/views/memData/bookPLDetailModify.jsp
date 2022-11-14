@@ -116,7 +116,7 @@
                 <div>
                    <div style="position: relative;">
                      <img src="/resources/save/${oneBookPL.packCover}"  class="bPlistCover card" id="preview"/>
-                   <div style="position: absolute; top:14px; left: 287px;">
+                   <div style="position: absolute; top:14px; left: 255px;">
                       <label for="file" >
                        <img id="editImg" src="/resources/img/edit.png"/>
                     </label>

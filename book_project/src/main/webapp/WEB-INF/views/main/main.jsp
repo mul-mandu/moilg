@@ -309,52 +309,80 @@
    
    <br/>
    <br/>
-   
-   
 
-   
-   <!-- 인생문장 -->
-   <div class="container">
-     <div class="row">
-         <div class="col-8">
-             <h4><b>독자 Pick! 문장이 주는 위로😀</b></h4>
-         </div>
-         <div class="col-4">
-            <button class="btn btn-outline-primary" type="button" style="float: right;" onclick="window.location='/gSentence/greatSentence'"> + 더보기 </button>
-         </div>
-      </div>
-      <br />
-      <div class="userPickSTC_item">
-         <div class="row">
-            <div class="col">
-               <img class="userPickSTC_img" src="/resources/img/senten.jpg">
-            </div>
-            
-            <div class="col">
-               <p class="userPickSTC_text">
-                  당신의 노력은 절대로 쓸데 없는 일이 되지는 않습니다.
-                  마지막까지 꼭 믿어주세요.
-                  마지막의 마지막 순간까지 믿어야합니다.
-                  - 
-                  나미야 잡화점의 기적 中
-                  당신의 노력은 절대로 쓸데 없는 일이 되지는 않습니다.
-                  마지막까지 꼭 믿어주세요.
-                  마지막의 마지막 순간까지 믿어야합니다.
-                  - 
-                 
-                  나미야 잡화점의 기적 中
-               </p>
-                  <br />
-               <span>by. user_name</span>
-               <span style="font-weight:bold; color: grey; font-size: 16px; float: right; ">공감수 10</span>
-            </div>
-               
-   
-         </div>
-      </div>
-   </div>
 
-   <br/>
+
+
+	<!-- 인생문장 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+				<h4>
+					<b>독자 Pick! 문장이 주는 위로😀</b>
+				</h4>
+			</div>
+			<div class="col-4">
+				<button class="btn btn-outline-primary" type="button"
+					style="float: right;"
+					onclick="window.location='/gSentence/greatSentence'">+ 더보기
+				</button>
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-4">
+				<div class="userPickSTC_item">
+					<img class="userPickSTC_img" src="/resources/img/autumn.jpg">
+					<br />
+					<p class="userPickSTC_text">당신의 노력은 절대로 쓸데 없는 일이 되지는 않습니다.
+						마지막까지 꼭 믿어주세요. 마지막의 마지막 순간까지 믿어야합니다. - 나미야 잡화점의 기적 中 당신의 노력은 절대로
+						쓸데 없는 일이 되지는 않습니다. 마지막까지 꼭 믿어주세요.</p>
+					<span>나미야 잡화점의 기적 중</span> <br /> <span>by. user_name</span> 
+					<span
+						style="font-weight: bold; color: grey; font-size: 16px; float: right;">
+						공감수10
+					</span>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="userPickSTC_item">
+					<img class="userPickSTC_img" src="/resources/img/sea.jpg"> <br />
+					<p class="userPickSTC_text">
+						"The bird fights its way out of the egg. The egg is the world. Who
+						would be born must first destroy a world". <br /> 새는 알에서 나오기 위해
+						투쟁한다. 알은 세계다. 태어나려고 하는 이는 먼저 세계를 파괴해야한다.
+					</p>
+					<span>데미안 中</span> <br /> 
+					<span>by. user_name</span> 
+					<span
+						style="font-weight: bold; color: grey; font-size: 16px; float: right;">
+						공감수10 
+					</span>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="userPickSTC_item">
+					<img class="userPickSTC_img" src="/resources/img/friend-ed.jpg">
+					<br />
+					<p class="userPickSTC_text">
+						우리는 그날 복숭아 빛 하늘을 걸었다. <br /> 사람들은 우리를 절친한 친구관계라고 정의했다. 그렇다면 짝사랑보다
+						짝우정이 힘든게 아닐까 <br /> <br /> &nbsp;
+
+					</p>
+					<span>작자 미상 中</span> <br /> 
+					<span>by. user_name</span> 
+					<span
+						style="font-weight: bold; color: grey; font-size: 16px; float: right;">
+						공감수10 
+					</span>
+				</div>
+			</div>
+		</div> <!-- items -->
+	</div> <!--container  -->
+
+<br/>
    
    <!-- [ 분위기별 ]추천 플레이 리스트  -->
    <div class="container">

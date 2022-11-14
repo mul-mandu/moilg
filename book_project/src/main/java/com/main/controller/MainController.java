@@ -50,7 +50,7 @@ public class MainController {
       
       // 3개로 다시 담기
       if(adminBPL.size() != 0) {  // 관리자가 작성한 플리가 있으면
-         for(int i=0 ; i < 4; i++) {
+         for(int i=0 ; i < 3; i++) {
             threeAdminBPL.add(adminBPL.get(i));
          }
       

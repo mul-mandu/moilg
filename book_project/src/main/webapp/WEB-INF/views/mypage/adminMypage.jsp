@@ -91,7 +91,7 @@
          <c:choose>
             
             <c:when test="${empty member.bgImg}"> 
-               <img src="/resources/save/bgDefault.jpg" class="mypageBg" id="backPreview" />
+               <img src="/resources/img/bgDefault.jpg" class="mypageBg" id="backPreview" />
                <div style="position: absolute; top:150px; left: 80%;" >
                   <label for="backFile" >
                      <img id="backEditImg" src="/resources/img/edit.png" style="width: 25px;"/>
@@ -119,7 +119,7 @@
          <c:choose>
             
             <c:when test="${empty member.photo }">
-               <img src="/resources/save/user.png" class="mypageProfile" id="preview" style="position: relative;"/>
+               <img src="/resources/img/user.png" class="mypageProfile" id="preview" style="position: relative;"/>
             <div style="position: absolute; top:440px; left: 28%;" >
                <label for="file" >
                   <img id="editImg" src="/resources/img/edit.png" style="width: 25px;"/>

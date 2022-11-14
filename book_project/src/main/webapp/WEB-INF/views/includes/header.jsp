@@ -146,7 +146,7 @@
             <sec:authorize access="isAnonymous()">
                <a href="#"
                   class="d-block link-dark text-decoration-none dropdown-toggle"
-                  data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/save/user.png" alt="profile" width="45" height="45"
+                  data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/img/user.png" alt="profile" width="45" height="45"
                   class="rounded-circle">
                </a>
            </sec:authorize>
@@ -156,7 +156,7 @@
                <c:if test="${memPhoto eq null}" >
                   <a href="#"
                      class="d-block link-dark text-decoration-none dropdown-toggle"
-                     data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/save/user.png" alt="profile" width="45" height="45"
+                     data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/img/user.png" alt="profile" width="45" height="45"
                      class="rounded-circle">
                   </a>
                </c:if>
