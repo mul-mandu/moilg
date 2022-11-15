@@ -6,15 +6,15 @@
 
 <!-- 마이페이지 이미지 -->
    <div class="container" >
-      <div class="mypageTOP">
-         <div class="image-box" >
+      <div class="mypageTOP col-md">
+         <div class="image-box col-md" >
          <c:choose>
             
             <c:when test="${empty member.bgImg}"> 
                <img src="/resources/save/bgDefault.jpg" class="mypageBg" id="backPreview" />
-               <div style="position: absolute; top:150px; left: 80%;" >
+               <div style="position: absolute; top:150%; left: 80%;">
                   <label for="backFile" >
-                     <img id="backEditImg" src="/resources/img/edit.png" style="width: 25px;"/>
+                     <img id="backEditImg" class="img-fluid" src="/resources/img/edit.png" style="width: 25px;"/>
                   </label>
                   <button type="button" id="bgCheckBtn"><img src="/resources/img/check.png" style="width: 20px;" /></button>
                    <input type="file" name="file" id="backFile" style="display: none;" >
