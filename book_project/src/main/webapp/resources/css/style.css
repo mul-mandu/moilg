@@ -1,12 +1,66 @@
 @charset "UTF-8";
 
-body {
-	font-family: 'Noto Sans KR', sans-serif;
-	margin-top: 25px;
-	margin-bottom: 30px;
-	margin-left: 200px;
-	margin-right: 200px;
+@media ( max-width : 1920px ) {
+	body {
+		font-family: 'Noto Sans KR', sans-serif;
+		margin-top: 25px;
+		margin-bottom: 30px;
+		margin-left: 200px;
+		margin-right: 200px;
+	}
+	.main_PLimg_div {
+		width: 380px;
+		height: 380px;
+		border-radius: 200px;
+		border-width: 5px;
+		overflow: hidden;
+		top: 0%;
+		margin-top: -50px;
+	}
 }
+
+@media ( max-width : 980px) {
+	.main_PLimg_div {
+		width: 380px;
+		height: 380px;
+		border-radius: 200px;
+		border-width: 5px;
+		overflow: hidden;
+		margin-top: -50px;
+	}
+}
+
+@media ( max-width : 820px ) {
+	body {
+		font-family: 'Noto Sans KR', sans-serif;
+		margin-top: 25px;
+		margin-bottom: 30px;
+		margin-left: 80px;
+		margin-right: 80px;
+	}
+}
+
+@media ( max-width: 768px ) {
+	  body {
+		font-family: 'Noto Sans KR', sans-serif;
+		margin-top: 25px;
+		margin-bottom: 30px;
+		margin-left: 30px;
+		margin-right: 30px;
+	}
+}
+
+
+@media (hover: none) and (pointer: coarse) {
+	  body {
+		font-family: 'Noto Sans KR', sans-serif;
+		margin-top: 25px;
+		margin-bottom: 30px;
+		margin-left: 30px;
+		margin-right: 30px;
+	}
+}
+
 
 @font-face {
 	font-family: 'Daehan-Bold';
@@ -28,19 +82,6 @@ body {
 
 #mainTitle {
 	font-family: 'GongGothicMedium';
-}
-
-.main_PLimg_div {
-	width: 380px;
-	height: 380px;
-	border-radius: 200px;
-	/* border-style: solid;
- 	border-color: #fff; */
-	border-width: 5px;
-	overflow: hidden;
-	position: absolute;
-	top: 0%;
-	margin-top: -50px;
 }
 
 .main_PLimg {
@@ -89,18 +130,30 @@ body {
 	left: 10px;
 }
 
-#pointcard {
+/* #pointcard {
 	width: 200px;
 	border: none;
 	box-sizing: inherit;
 	margin-left: auto;
 	margin-right: auto;
-}
+} */
 
-#pointcard img {
+.pointcard_img {
 	border-radius: 5px;
 	box-shadow: 6px 6px 2px #e0e0e0;
+	width: 100%;
+	height: 16rem;
+	max-width: 100%;
+ 
+	overflow: hidden;
+	object-fit: cover;
+	margin: 2px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
 }
+
+
 
 /* 메인캐러셀 CSS 끝*/
 a {
@@ -314,13 +367,7 @@ input::-moz-placeholder {
 	
 }
 
-.pointcard_img {
-	width: 100%;
-	height: 260px;
-	overflow: hidden;
-	object-fit: cover;
-	margin: 2px;
-}
+
 
 a.nav-link {
 	color: inherit;
@@ -1036,8 +1083,8 @@ textarea#book_replyArea {
 	height: 300px;
 	text-align: center;
 	vertical-align: middle;
-	padding-left: 130px;
-	padding-right: 150px;
+	padding-left: 20rem;
+	padding-right: 30rem;
 	padding-top: 0x;
 	padding-bottom: 0px;
 	border-radius: 10px;
