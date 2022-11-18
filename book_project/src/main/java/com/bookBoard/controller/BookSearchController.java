@@ -9,9 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bookBoard.domain.ReplyBoardVO;
 import com.bookBoard.service.BookSearchService;
 import com.member.domain.BookListVO;
-import com.member.domain.OneBookListVO;
 import com.member.service.MemberService;
 import com.member.service.domain.CustomUser;
 
@@ -64,6 +63,9 @@ public class BookSearchController {
           model.addAttribute("bookPLlist", playList);
        }
        
+       
+       
+       
     }
     
     
@@ -86,10 +88,17 @@ public class BookSearchController {
     
     
     
+    //책 상세페이지 (댓글 가져오기)
+    @GetMapping(value="getReply/{isbn}", consumes = "application/json", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<List<ReplyBoardVO>> getReply(@PathVariable("isbn") String isbn){
+    	log.info("*************** 댓글 가져오기 !! getReply isbn : " + isbn);
+    	List<ReplyBoardVO> list = bookService.getReply(isbn);
+    	log.info("댓글 리스트!!! +++++ : "  + list);
+    	
+    	return new ResponseEntity<List<ReplyBoardVO>>(list, HttpStatus.OK);
+    }
     
-    
-    
-    
+
     
     
 

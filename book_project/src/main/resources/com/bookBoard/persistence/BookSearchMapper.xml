@@ -11,8 +11,37 @@
 		values(re_no_seq.nextval, #{id}, #{isbn}, #{reTitle}, #{reContent})
 	</insert>
 
+
+
+	<resultMap type="com.bookBoard.domain.ReplyBoardVO" id="replyMap">
+	 	<id property="id" column="id"/>
+         <result property="re_no" column="re_no" />
+         <result property="isbn" column="isbn" />
+         <result property="reTitle" column="reTitle" />
+         <result property="reContent" column="reContent" />
+         <result property="goodCount" column="goodCount" />
+         <result property="reReg" column="reReg" />
+         <collection property="memberInfo" resultMap="memInfoMap"></collection>
+	</resultMap>
+	<!--멤버 정보 테이블 값을 MemberVO 클래스에 대입하는것 명확히 정의  -->
+      <resultMap type="com.member.domain.MemberVO" id="memInfoMap">
+         <result property="id" column="id" />
+         <result property="photo" column="photo" />
+         <result property="nickName" column="nickName" />
+      </resultMap>
+
+
+	<!-- isbn에 해당하는 댓글가져오기 -->
+	<select id="getReplyList" resultMap="replyMap">
+		select r.*, m.photo, m.nickName 
+		from ReplyBoard r, memberSignup m 
+		where r.id = m.id
+		and isbn=#{isbn}
+		order by reReg desc
+	</select>
+
   
-  
+
   
   
   
