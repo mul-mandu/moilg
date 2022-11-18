@@ -4,28 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bookBoard.domain.ReplyBoardVO;
+import com.bookBoard.service.BookSearchService;
 import com.member.domain.BookListVO;
 import com.member.domain.OneBookListVO;
 import com.member.service.MemberService;
+import com.member.service.domain.CustomUser;
 
 import lombok.extern.log4j.Log4j;
 
-// 주석
-// 주석2
 @Controller
 @RequestMapping("/search/*")
 @Log4j
 public class BookSearchController {
    
    
-   @Autowired
-      private MemberService service;
+	@Autowired
+	private MemberService service;
+   
+	@Autowired
+	private BookSearchService bookService;
    
    @GetMapping("titleSearch")
    public void titleSearch() {
@@ -54,12 +65,45 @@ public class BookSearchController {
           model.addAttribute("bookPLlist", playList);
        }
        
+       
+       
+       
     }
     
     
-    @GetMapping("test")
-    public void test() {
-       log.info("마이페이지 호출");
+  //책 상세페이지 (댓글 처리하기)
+    @PostMapping(value="bookDetails", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String> bookDetails(@RequestBody ReplyBoardVO vo, Authentication auth){
+    	log.info("*************** ajax로 받아서 채운 댓글 VO : " + vo);
+    	int result;
+    	CustomUser user = (CustomUser)auth.getPrincipal();
+    	String id = user.getUsername();
+    	log.info("댓글 아이디 1 :::::::::::::::::::::::::: " + id);
+    	
+    	vo.setId(id);
+    	result = bookService.addReply(vo); 
+    	log.info("댓글 저장 성공했으면 1 :::::::::::::::::::::::::: " + result);
+    	
+        return result == 1 ? new ResponseEntity<String>("success!", HttpStatus.OK)
+                : new ResponseEntity<String>("fail....",HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+    
+    
+    
+    
+    //책 상세페이지 (댓글 가져오기)
+    @GetMapping(value="getReply/{isbn}", consumes = "application/json", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<List<ReplyBoardVO>> getReply(@PathVariable("isbn") String isbn){
+    	log.info("*************** 댓글 가져오기 !! getReply isbn : " + isbn);
+    	List<ReplyBoardVO> list = bookService.getReply(isbn);
+    	
+    	
+    	return new ResponseEntity<List<ReplyBoardVO>>(list, HttpStatus.OK);
+    }
+    
+
+    
+    
 
 }

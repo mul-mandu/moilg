@@ -427,9 +427,6 @@
                  
                  </div>
            
-                 
-   
-                 
               </div>
            </div>
         </div> <!-- 상단 -->
@@ -528,29 +525,41 @@
         
         
          <div> <!-- 북플 -->
-           <h4><b>북플 (5)</b></h4>
+           <h4><b>댓글(5)</b></h4>
            <hr />
            <div class="book_replyForm">
-              <form action="#" method="post">
                  <table class="book_replyFormTBL">
                     <tr>
-                       <td> <b>기억에 남는 문장</b> </td>
-                       <td> 
-                        <pre><textarea name="replyTitle" id="book_replyArea" placeholder="* 기억이 남는 문장을 적어주세요👀 *"></textarea></pre>
-                       </td>
+                       <td><b>기억에 남는 문장</b></td>
+                       <sec:authorize access="isAnonymous()"> 
+	                       <td> 
+								<pre><textarea rows="3" id="book_replyArea" placeholder="* 기억에 남는 문장을 적어주세요👀&#13;&#10;(로그인 후 이용해주세요) *" disabled></textarea></pre>
+	                       </td>
+                       </sec:authorize>
+                       <sec:authorize access="isAuthenticated()"> 
+	                       <td> 
+	                        	<pre><textarea rows="3" id="book_replyArea" placeholder="* 기억에 남는 문장을 적어주세요👀 *" required="required"></textarea></pre>
+	                       </td>
+                       </sec:authorize>
                     </tr>
                     
                     <tr>
-                       <td> <b>감상평</b> </td>
-                       <td> 
-                        <pre><textarea name="replyContent" id="book_replyArea" placeholder="* user님의 감상평을 적어주세요✒ *"></textarea></pre>
-                       </td>
+                       <td><b>감상평</b></td>
+                       <sec:authorize access="isAnonymous()"> 
+	                       <td> 
+	                        <pre><textarea rows="3" id="book_replyContentArea" placeholder="* user님의 감상평을 적어주세요✒&#13;&#10;(로그인 후 이용해주세요) *" disabled></textarea></pre>
+	                       </td>
+                       </sec:authorize>
+                       <sec:authorize access="isAuthenticated()"> 
+	                       <td> 
+	                        <pre><textarea rows="3" id="book_replyContentArea" placeholder="* user님의 감상평을 적어주세요✒ *" required="required"></textarea></pre>
+	                       </td>
+                       </sec:authorize>
                     </tr>
                  </table>
-                 
-                 <button type="submit" class="btn btn-primary btn-sm" >등록하기</button>
-              
-              </form>
+				<sec:authorize access="isAuthenticated()"> 
+					<button class="btn btn-primary btn-sm" id="replyBtn" >등록하기</button>
+				</sec:authorize>
            </div>
               
               
@@ -569,9 +578,9 @@
                     <h5 class="replytitle"><b>“꿈꾸던 삶을 살고 있어?”</b></h5>
                     <hr />
                     <pre>
-결말까지 계속 조마조마하며 읽었다,
-각 캐릭터들의 관계성이 너무나 흥미로웠고,  
-베리감동감동 앤드 쌔드쌔드 벗 인터레스팅팅팅
+					결말까지 계속 조마조마하며 읽었다,
+					각 캐릭터들의 관계성이 너무나 흥미로웠고,  
+					베리감동감동 앤드 쌔드쌔드 벗 인터레스팅팅팅
                     </pre>
                     <div style="text-align: right;">
                        <p style="text-align: right;">2022.09.28</p>
@@ -579,9 +588,11 @@
                        <button class="btn btn-secondary btn-sm">수정</button>
                        <button class="btn btn-secondary btn-sm">삭제</button>
                        <span>200</span>
-                       <a href="">공감하기<i class="fa-regular fa-thumbs-up"></i></a>
+                       <sec:authorize access="isAnonymous()"> 
+							<button class="fa-regular fa-thumbs-up" style="border: none; background: transparent;">좋아요</button>
+                       </sec:authorize>
                        <!-- <i class="fa-solid fa-thumbs-up"></i>    좋아요 눌렀을 때 이모티콘-->
-                    
+                    	
                     </div>
                     
                  </div>
@@ -589,35 +600,7 @@
            </div>
            
            
-           
-           <div class="reply"> <!-- 댓글 뿌려주기  -->
-             <div class="row">
-                <div class="col-3" style="text-align: center;">
-                    <img src="/resources/img/profile02.jpg" class="reply_ProImg"> <br/>
-                    <p><b>불가사의</b></p> 
-                 </div>
-                 
-                 <div class="col">
-                    <h5 class="replytitle"><b>“뒤틀린 장소에 계속 있으면 그곳이 뒤틀려있는지 눈치 채지 못하게 돼”</b></h5>
-                    <hr />
-                    <pre>
-결말까지 계속 조마조마하며 읽었다,
-각 캐릭터들의 관계성이 너무나 흥미로웠고,  
-베리감동감동 앤드 쌔드쌔드 벗 인터레스팅팅팅
-                    </pre>
-                    <div style="text-align: right;">
-                      <p style="text-align: right;">2022.09.28</p>
-                    <hr />
-                    <button class="btn btn-secondary btn-sm">수정</button>
-                    <button class="btn btn-secondary btn-sm">삭제</button>
-                    <span>200</span>
-                    <a href="">공감하기<i class="fa-regular fa-thumbs-up"></i></a>
-                    <!-- <i class="fa-solid fa-thumbs-up"></i>    좋아요 눌렀을 때 이모티콘-->
-                   </div>
-                   
-                </div>
-             </div>
-          </div>
+         
            
            
         </div> <!-- 북플 끝 -->
@@ -805,8 +788,10 @@
                   cover:"Big",
                   callback:"bookData"
                }
-           })
+           });
            
+        
+   
         
 
   }); //document
@@ -965,7 +950,114 @@
          
       });
         
-     
+      
+      
+      //댓글 ajax 보내기
+      $("#replyBtn").on('click', function(){
+          console.log("댓글 저장 버튼 누름 ");
+          console.log("isbn값 : " + isbn);
+         
+          var replyTitle = $('#book_replyArea').val();
+          var replyContent =$('#book_replyContentArea').val();
+
+          console.log("댓 타이틀 : " + replyTitle);
+          console.log("댓 본문 : " + replyContent);
+          
+          var replyData = {"reTitle" : replyTitle, "reContent" : replyContent, "isbn" : isbn};
+        	  
+          $.ajax({
+              type : "POST",
+              url : "/search/bookDetails",
+              data: JSON.stringify(replyData),
+              contentType: "application/json;charset=utf-8",
+              processData: false,
+                 beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                 },
+                 success: function(result){
+                     console.log("댓글 저장 성공!");
+                     console.log(result);
+                     showReplyList();
+  	               	// 댓글 등록후 인풋란에 글 없애기
+  	               	$("#book_replyArea").val("");
+  	               	$("#book_replyContentArea").val("");
+                  },
+                  error: function(e){
+                     console.log("댓글 저장 실패......");
+                     console.log(e);
+                  }
+           });
+          
+          
+            //댓글 목록 가져와 뿌리기 호출 
+            showReplyList();
+    	    var isbnData = {"isbn" : isbn};  
+            
+    		//댓글 목록 가져와 뿌려주기 함수 (페이징처리 X)
+            	function showReplyList(){
+                  console.log("show reply list 호출!!"); 
+                  // 전체 댓글 가져오기 요청 
+                  $.ajax({
+                     type: "GET",
+                     url: "/search/getReply/" + isbn + ".json",
+                     data: {isbn : isbn},
+                     contentType: "application/json;charset=utf-8",
+                     success: function(result){
+                        console.log("요청 성공!!!"); 
+                        console.log(result);
+                        makeList(result);
+                     }, 
+                     error: function(e){
+                        console.log("요청 실패....");
+                        console.log(e);
+                     }
+                  });
+                  
+               }//showReplyList
+               
+               
+               
+            let replyContainer = $(".reply");   
+            // 댓글 목록 만들어서 화면에 부착 함수 
+               function makeList(result){
+                  console.log("makelist!!!!!" + result.length);
+                  
+                  // 댓글이 없을 경우 
+                  if(result == null || result.length == 0){
+                     // 댓글 목록에 아래와 같이 태그 부착하고 
+                     
+                     replyContainer.html("<div class='reply' style='text-align: center;'>댓글이 없습니다.)</div>"); 
+                     return; // makeList 함수 강제 종료! 
+                  }
+                  
+                  // 부착할 html 목록 문자열로 만들기 
+                  let str = ""; 
+                  for(let i = 0; i < result.length; i++){
+                     str += "<div class='reply_li'><div class='replyer_reg_ctn'>";
+                     str += "<div class='replyer_div'>"+result[i].id+"</div>";
+                     str += "<div><div class='reply_div'>"+result[i].reTitle+"</div>";
+                     str += "<div><div class='reply_div'>"+result[i].reContent+"</div>";
+                     
+                     //로그인 된 상황에서 보여줘야하며, 댓글 단 사람이 로그인한 id와 같으면 보여주기 
+                    
+                     str += "<sec:authorize access='isAuthenticated()'>";
+                     if(username == result[i].replyer){ //댓글작성자가 로그인한 사람과 동일하면 
+     	                str += "<button class='btn btn-info replyBtn' data-repno='"+result[i].repno+"' data-service='modify'>수정</button>"
+     	 				str += "<button class='btn btn-danger replyBtn' data-repno='"+result[i].repno+"' data-service='delete'>삭제</button>" 
+                     }
+      				
+      				str +=" </sec:authorize></div></div>"
+                     	
+                  }
+                
+                  replyContainer.html(str);   // html 부착 
+                  
+               }
+               
+               
+          
+       });
+      
 
    
    

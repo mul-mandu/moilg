@@ -17,11 +17,10 @@
 	</div>
   </footer>
 
-
+ 
 <script>
 $('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
+    margin: 15,
     nav:true,
     responsive:{
         0:{

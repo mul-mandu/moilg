@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+   uri="http://www.springframework.org/security/tags"%>
 
 <!-- header 복붙 -->
 <%@ include file="../includes/header.jsp"%>
@@ -9,39 +9,39 @@
 <h4>인생문장 작성하기</h4>
 <br />
 <div class="row">
-	<div class="col-4">
-		<div>
-			<div style="position: relative;">
-				<img src="/resources/img/imgDefault.jpg" class="bPlistCover card" id="preview" />
-				<div style="position: absolute; top: 14px; left: 243px;">
-					<label for="file"> 
-						<img id="editImg" src="/resources/img/edit.png" />
-					</label>
-				</div>
-			</div>
+   <div class="col-4">
+      <div>
+         <div style="position: relative;">
+            <img src="/resources/img/imgDefault.jpg" class="bPlistCover card" id="preview" />
+            <div style="position: absolute; top: 14px; left: 243px;">
+               <label for="file"> 
+                  <img id="editImg" src="/resources/img/edit.png" />
+               </label>
+            </div>
+         </div>
 
-		</div>
-	</div>
-	<div class="col-8">
-		<form action="/gSentence/greatSentenceForm" method="post"
-			enctype="multipart/form-data">
-			<sec:csrfInput />
-			<span id="textCount"> 0자 </span><span id="textTotal">/200자</span>
-<!-- 			<pre> -->
-				<textarea name="greatContent" id="contents"
-					placeholder="* 인생문장을 적어주세요👀 *" maxlength="200"></textarea>
-<!-- 			</pre> -->
-				<button id="addbook" type="button" data-bs-target="#findBookModalToggle" data-bs-toggle="modal" class="btn btn-outline-secondary mx-auto">+ 도서 추가</button>
-				<input type="text" id="isbn" name="greatIsbn" style="display: none;"/>
-				<input type="text" id="bookTitle" name="greatBookTitle"/>
-			<br /> <span> <input type="checkbox" value="0" name="greatContentStatus" />비공개
-			<input type="file" id="file" name="greatImgFile" style="display: none;"/>
-				<button type="submit" class="btn btn-outline-secondary btn-sm" style="float: right;">등록하기</button>
-				<button type="button" class="btn btn-outline-secondary btn-sm" style="float: right"
-					onclick="window.location='/gSentence/greatSentence'">뒤로가기</button>
-			</span>
-		</form>
-	</div>
+      </div>
+   </div>
+   <div class="col-8">
+      <form action="/gSentence/greatSentenceForm" method="post"
+         enctype="multipart/form-data">
+         <sec:csrfInput />
+         <span id="textCount"> 0자 </span><span id="textTotal">/200자</span>
+<!--          <pre> -->
+            <textarea name="greatContent" id="contents"
+               placeholder="* 인생문장을 적어주세요👀 *" maxlength="200"></textarea>
+<!--          </pre> -->
+            <button id="addbook" type="button" data-bs-target="#findBookModalToggle" data-bs-toggle="modal" class="btn btn-outline-secondary mx-auto">+ 도서 추가</button>
+            <input type="text" id="isbn" name="greatIsbn" style="display: none;"/>
+            <input type="text" id="bookTitle" name="greatBookTitle"/>
+         <br /> <span> <input type="checkbox" value="0" name="greatContentStatus" />비공개
+         <input type="file" id="file" name="greatImgFile" style="display: none;"/>
+            <button type="submit" class="btn btn-outline-secondary btn-sm" style="float: right;">등록하기</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" style="float: right"
+               onclick="window.location='/gSentence/greatSentence'">뒤로가기</button>
+         </span>
+      </form>
+   </div>
 </div>
 
 
@@ -79,7 +79,7 @@
             <!-- 선택한 도서 여기에 담김 -->
                   <table id="bookSelectedTBL">
                   
-             	</table>
+                </table>
                  
               <hr />
 
@@ -99,32 +99,32 @@
 
 
 <script>
-	$("#file").on('change', function() {
-		var fileName = $("#file").val();
-		console.log(fileName);
-		$(".upload-name").val(fileName);
-	});
+   $("#file").on('change', function() {
+      var fileName = $("#file").val();
+      console.log(fileName);
+      $(".upload-name").val(fileName);
+   });
 
-	$("#contents").keyup(function(e) {
-		let content = $(this).val();
+   $("#contents").keyup(function(e) {
+      let content = $(this).val();
 
-		// 글자수 세기
-		if (content.length == 0 || content == '') {
-			$('#textCount').text('0자');
-		} else {
-			$('#textCount').text(content.length + '자');
-		}
+      // 글자수 세기
+      if (content.length == 0 || content == '') {
+         $('#textCount').text('0자');
+      } else {
+         $('#textCount').text(content.length + '자');
+      }
 
-		// 글자수 제한
-		if (content.length > 200) {
-			// 200자 부터는 타이핑 되지 않도록
-			$(this).val($(this).val().substring(0, 200));
-			// 200자 넘으면 알림창 뜨도록
-			alert('글자수는 200자까지 입력 가능합니다.');
-		}
-		;
+      // 글자수 제한
+      if (content.length > 200) {
+         // 200자 부터는 타이핑 되지 않도록
+         $(this).val($(this).val().substring(0, 200));
+         // 200자 넘으면 알림창 뜨도록
+         alert('글자수는 200자까지 입력 가능합니다.');
+      }
+      ;
 
-	});
+   });
 </script>
 
 <script>
@@ -221,9 +221,9 @@ var selectedBookArr = [];
               alert('이미 등록되어 있는 도서입니다!');
            }else{
               
-        	   $("#isbn").val(isbn);
-        	   $("#bookTitle").val(title);
-        	   console.log("저장할 도서명 : " + title + "isbn : " + isbn);
+              $("#isbn").val(isbn);
+              $("#bookTitle").val(title);
+              console.log("저장할 도서명 : " + title + "isbn : " + isbn);
            }
           
        }// else
