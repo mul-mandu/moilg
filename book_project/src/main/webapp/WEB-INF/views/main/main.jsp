@@ -197,8 +197,8 @@
 	<div class="owl-carousel owl-theme">
 		<c:forEach var="list" items="${playList}">
 			<div class="item">
-				<a href="/memData/bookPlistDetail?list_no=${list.list_no}"> <img
-					class="pointcard_img" src="/resources/save/${list.packCover}">
+				<a href="/memData/bookPlistDetail?list_no=${list.list_no}"> 
+				<img class="pointcard_img" src="/resources/save/${list.packCover}">
 				</a>
 				<div class="card-body">
 					<div class="d-flex justify-content-between align-items-center">
@@ -367,7 +367,7 @@
 
 		<div class="col-4">
 			<div class="userPickSTC_item">
-				<img class="userPickSTC_img" src="/resources/img/sea.jpg"> <br />
+				<img class="userPickSTC_img" src="/resources/img/bird.jpg"> <br />
 				<p class="userPickSTC_text">
 					"The bird fights its way out of the egg. The egg is the world. Who
 					would be born must first destroy a world". <br /> 새는 알에서 나오기 위해
@@ -381,7 +381,7 @@
 
 		<div class="col-4">
 			<div class="userPickSTC_item">
-				<img class="userPickSTC_img" src="/resources/img/friend-ed.jpg">
+				<img class="userPickSTC_img" src="/resources/img/sunset.jpg">
 				<br />
 				<p class="userPickSTC_text">
 					우리는 그날 복숭아 빛 하늘을 걸었다. <br /> 사람들은 우리를 절친한 친구관계라고 정의했다. 그렇다면 짝사랑보다

@@ -68,10 +68,10 @@
 <div class="container" id="bookitemDetails_con">
    <div> <!-- 상단 이미지 / 제목 /  작가 / 버튼 등 -->
         <div class="row">
-           <div class="col-5">
+           <div class="col-5 col-md">
               <img src="/resources/save/${oneBookPL.packCover}"  class="bPlistCover card" />
            </div>
-           <div class="col">
+           <div class="col col-md">
               <h5> ${plMKNickName}</h5>
               <h2><b>${oneBookPL.bookPLTitle}</b></h2>
               <p>${booksList.size()}권</p>

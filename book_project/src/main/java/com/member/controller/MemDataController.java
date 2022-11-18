@@ -507,6 +507,7 @@ public class MemDataController {
    public ResponseEntity<String> newBookList(@RequestBody BookListVO vo){
       log.info("*********** view에서 보낸 vo : " + vo);
       vo.setPackCover("packDefaultImg.jpg");
+      vo.setListStatus(1);
       int result = service.newBookList(vo); 
       log.info("addBookList result!!!!!!! : " + result);
       return result == 1 ? new ResponseEntity<String>("success!", HttpStatus.OK)

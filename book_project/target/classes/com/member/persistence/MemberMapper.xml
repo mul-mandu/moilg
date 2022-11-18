@@ -112,12 +112,12 @@
   <!-- 키워드 넘버 주고 북플리List 가져오기 (장르) -->
   <select id="selectGBookList" resultType="com.member.domain.BookListVO">
    select * from BookList where listStatus=0
-   <if test="list != null">
+<!--    <if test="list != null">
        and list_no in 
    <foreach collection="list" item="item" open="(" close=")" separator=",">
       #{item}
    </foreach>
-   </if>
+   </if> -->
   </select>
   
   
