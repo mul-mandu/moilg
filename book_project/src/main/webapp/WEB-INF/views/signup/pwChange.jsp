@@ -55,11 +55,11 @@ $(document).ready(function(){
 	
 
 	$("#pwChange_div").on("change", "#memId", function(){ // id 입력란에 값을 입력했을 때
-	     console.log("아이디 값 입력함!!!");
+	     //console.log("아이디 값 입력함!!!");
 	     // id 입력란에 사용자가 입력한 값이 필요
 	    // let idVal = $("#id").val();
 	     let idVal = $(this).val();
-	     console.log(idVal);  //출력해서 확인해보기!!!
+	     //console.log(idVal);  //출력해서 확인해보기!!!
 	     const $resultMsg = $('#checkResult');
 	     
 	     
@@ -74,8 +74,8 @@ $(document).ready(function(){
 	               xhr.setRequestHeader(header, token);
 	           },
 	        success: function(result){  // 성공하면 result객체 여기에 담겨서 콘솔에 찍기
-	           console.log("success");
-	           console.log(result);
+	           //console.log("success");
+	           //console.log(result);
 	           // 결과를 아이디사용가능 여부 input테그에 value값으로 띄워주기
 	           if(result == "이미 사용중인 ID 입니다."){
 					$resultMsg.html('✔');
@@ -88,7 +88,7 @@ $(document).ready(function(){
 	           }
 	        },
 	        error: function(e){  // 만약 에러나면 콘솔에 띄워주기 
-	           console.log(e);
+	           //console.log(e);
 	        }
 	     });//에이작스
 	      
@@ -99,8 +99,8 @@ $(document).ready(function(){
 		     $('#submitBtn').click(function() {
 		 		var id = $('#memId').val(); // 아이디 주소값 얻어오기!
 		 		var pw =$('#newPw').val();// 비번값 
-		 		console.log('아이디 : ' + id); // 아이디 오는지 확인
-		 		console.log('비번 : ' + pw); // 비번값 오는지 확인
+		 		//console.log('아이디 : ' + id); // 아이디 오는지 확인
+		 		//console.log('비번 : ' + pw); // 비번값 오는지 확인
 		 		var data = {"id" : id, "pw" : pw};
 		 		
 		 		
@@ -113,15 +113,15 @@ $(document).ready(function(){
 		                   xhr.setRequestHeader(header, token);
 		            	},
 		 			success : function (data) {
-		 				console.log("data : " +  data);
+		 				//console.log("data : " +  data);
 		 				alert('비밀번호가 변경되었습니다.');
 		 				$("#formform").hide();
 		 				$("#mainGo").show();
 		 				
 		 			},
 		 			error: function(e){ //요청 실패시 실행할 코드 ...
-		 	               console.log("저장실패");
-		 	               console.log(e);
+		 	               //console.log("저장실패");
+		 	               //console.log(e);
 		 	            }      			
 		 		}); // end ajax
 		 		
@@ -138,5 +138,5 @@ $(document).ready(function(){
 
 
 
-<!-- footer 복붙 -->        
+<%-- footer 복붙 --%>        
    <%@ include file="../includes/footer.jsp" %>

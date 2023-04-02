@@ -9,6 +9,9 @@ public interface MainService {
    // 전체 북플레이 리스트 가져오기
    public List<BookListVO> getAllPL();
    
+   // 인기 북플리 리스트 가져오기
+   public List<BookListVO> getBestPL();
+   
    // 장르 전체 리스트넘버 가져오기 
    public List<Integer> getGenreAll();
    

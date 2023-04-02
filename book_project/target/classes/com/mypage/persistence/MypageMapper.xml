@@ -15,6 +15,61 @@
       select * from BookList where id=#{id} and (listStatus=0 or listStatus=1)  order by list_no desc 
   </select>
   
+    
+  <!-- 회원이 생성한 북플리 페이징처리해서 가져오기  -->
+  <select id="getMyBookPLlistPaging" resultType="com.member.domain.BookListVO">
+		<![CDATA[  
+			select list_no, bookPLTitle, id, mbti, packCover, listStatus, scrapCount 
+			from 
+			(
+				select
+				rownum r, list_no, bookPLTitle, id, mbti, packCover, listStatus, scrapCount
+			 	from BookList
+			 	where 
+			 		rownum <= #{num} * 8
+			 		and 
+			 		id = #{id} and (listStatus = 0 or listStatus = 1)
+			 	order by list_no DESC
+			  )
+			 where r > (#{num} - 1) * 8
+			 
+		]]>
+	</select>
+	
+	<!-- 회원이 좋아요 누른 북플리 갯수 가져오기  -->
+	<select id="scrapPLCount" resultType="int">
+		select count(*) from scrapRDList where id=#{id}
+	</select>
+	
+	<!-- 회원이 좋아요한 북플리 리스트 페이징 처리해서 가져오기  -->
+	  <select id="getMemScrapPLPaging" resultType="com.member.domain.BookListVO">
+		<![CDATA[  
+			select id, list_no, bookpltitle, mbti, packcover, liststatus, scrapcount, nickName
+			from 
+			(
+				select
+				rownum r, id, list_no, bookpltitle, mbti, packcover, liststatus, scrapcount, nickName
+			 	from 
+                    (select s.id as id, s.list_no as list_no
+                    , g.bookpltitle as bookpltitle, g.mbti as mbti
+                    , g.packcover as packcover, g.liststatus as liststatus
+                    , g.scrapcount as scrapcount, m.nickName as nickName
+                    from BookList g, memberSignup m, scrapRDList s
+                    where g.id = m.id 
+                    and s.list_no = g.list_no 
+                    and g.liststatus = 0 
+                    and s.id = #{id}
+                    order by s.list_no desc
+                    )
+			 	where 
+			 		rownum <= #{num} * 8
+			  )
+			 where r > (#{num} - 1) * 8
+		]]>
+	</select>
+	
+	
+  
 
     <!-- 읽고 싶은 책 DB에 넣기 -->
   <insert id="addWantBookData">
@@ -33,12 +88,41 @@
      select * from wantBook where id=#{id} order by wantBook_no desc
   </select>
   
+   <select id="getWantBooksPaging" resultType="com.mypage.domain.WantBookVO">
+	<![CDATA[  
+		select wantBook_no, id, isbn, bookTitle, author, bookCover 
+		from 
+		(
+			select
+			rownum r, wantBook_no, id, isbn, bookTitle, author, bookCover 
+		 	from wantBook
+		 	where 
+		 		rownum <= #{num} * 8
+		 		and 
+		 		id = #{id}
+		 	order by wantBook_no DESC
+		  )
+		 where r > (#{num} - 1) * 8
+		 
+	]]>
+</select>
+	
+  
+
+  <!-- 읽고 싶은책 갯수 가져오기 -->
+  <select id="wantBookCount" resultType="int">
+  	select count(*) from wantBook where id=#{id}
+  </select>
+  
+  
+  
   <!-- 읽은 책 DB에 넣기 -->
   <insert id="finishBookData">
      insert into finBook(finBook_no, id, isbn, bookTitle, author, bookCover)
      values (finBook_no_seq.nextval, #{id}, #{isbn}, #{bookTitle}, #{author}, #{bookCover})
   </insert>
   
+
   
   <!-- 읽고 싶은 책 해제 -->
   <delete id="cancelFinRead">
@@ -51,6 +135,25 @@
      select * from finBook where id=#{id} order by finBook_no desc
   </select>
   
+  <select id="readBooksPaging" resultType="com.mypage.domain.FinBookVO">
+	<![CDATA[  
+	select finBook_no, id, isbn, bookTitle, author, bookCover 
+	from 
+	(
+		select
+		rownum r, finBook_no, id, isbn, bookTitle, author, bookCover 
+	 	from finBook
+	 	where 
+	 		rownum <= #{num} * 8
+	 		and 
+	 		id = #{id}
+	 	order by finBook_no DESC
+	  )
+	 where r > (#{num} - 1) * 8
+	 
+	]]>
+	</select>
+  
   <!-- 읽은 책 갯수 가져오기 -->
   <select id="getCountReadBook" resultType="int">
      select count(*) from finBook where id=#{id}
@@ -60,6 +163,143 @@
   <select id="getMyscrapRDList" resultType="int">
      select list_no from scrapRDList where id=#{id} order by list_no desc
   </select>
+  
+  
+  <!-- 공감한 댓글 마이페이지에서 삭제 -->
+  <delete id="deleteLikeReplyInMypage">
+  	delete replyLike 
+  	where id=#{id}
+  	and re_no=#{re_no}
+  </delete>
+  
+  
+  <!-- 회원의 인생문장 개수 가져오기  -->
+  <select id="mySentenceCount" resultType="int">
+  	 select count(*) from greatSentence where id=#{id} and (greatContentStatus =  1 or greatContentStatus =  0)
+  </select>
+  
+  <!-- 회원의 인생문장 페이징처리해서 가져오기  -->
+	<select id="mySentencesPaging" resultType="com.sentence.domain.SentenceVO">
+		<![CDATA[
+			select great_no, id, nickName,greatContent, greatImg, greatIsbn, greatBookTitle, greatLikeCount, greatContentStatus, greatReg
+			from 
+			(
+				select
+				rownum r, great_no, id, nickName,greatContent, greatImg, greatIsbn, greatBookTitle, greatLikeCount, greatContentStatus, greatReg
+			 	from 
+                    (select g.*, m.nickName
+                    from greatSentence g, memberSignup m 
+                    where g.id = m.id 
+                    and g.greatContentStatus =  1
+                    and g.id = #{id}
+                    order by great_no desc
+                    )
+				 	where 
+				 		rownum <= #{num} * 4
+				  )
+				 where r > (#{num} - 1) * 4
+		]]>
+	</select>
+  
+  
+  
+  <!-- 회원이 좋아요한 인생문장 갯수 가져오기  -->
+  <select id="myLikeSentenceCount" resultType="int">
+  	select count(*) from greatSentenceLike where id=#{id}
+  </select>
+  
+  
+  <!-- 회원이 좋아요한 인생문장 페이징해서 가져오기  -->
+  <select id="myLikeSentencePaging" resultType="com.sentence.domain.SentenceVO">
+  	<![CDATA[
+	  	select great_no, id, nickName,greatContent, greatImg, greatIsbn, greatBookTitle, greatLikeCount, greatContentStatus, greatReg
+				from 
+				(
+					select
+					rownum r, great_no, id, nickName,greatContent, greatImg, greatIsbn, greatBookTitle, greatLikeCount, greatContentStatus, greatReg
+				 	from 
+	                    (select l.*, g.greatContent, g.greatImg, g.greatIsbn, g.greatBookTitle, g.greatLikeCount, g.greatContentStatus, g.greatReg, m.nickName
+	                    from greatSentence g, memberSignup m, greatSentenceLike l
+	                    where g.id = m.id 
+	                    and g.great_no = l.great_no
+	                    and g.greatContentStatus =  1 
+	                    and l.id = #{id}
+	                    order by l.great_no desc
+	                    )
+					 	where 
+					 		rownum <= #{num} * 4
+					  )
+					 where r > (#{num} - 1) * 4
+  	]]>
+  </select>
+  
+  <!-- 회원의 댓글 수 가져오기  -->
+  <select id="myReplyCount" resultType="int">
+  	select count(*) from ReplyBoard where id=#{id} and reStatus=1
+  </select>
+  
+  
+  <!-- 회원이 작성한 댓글 페이징해서 가져오기  -->
+  <select id="getMyReplyPaging" resultType="com.bookBoard.domain.ReplyBoardVO">
+  	<![CDATA[
+	  	select re_no, id, isbn, reTitle, reContent, goodCount, reReg, Restatus, bookTitle, bookCover, nickName
+	    from 
+	    (
+	        select
+	        rownum r, re_no, id, isbn, reTitle, reContent, goodCount, reReg, Restatus, bookTitle, bookCover, nickName
+	        from(
+	        select p.* , m.nickName
+	                    from ReplyBoard p, memberSignup m
+	                    where p.id = m.id
+	                    and p.id=#{id}
+	                    and p.reStatus = 1
+	                    order by p.re_no desc 
+	                )
+	            where rownum <= #{num} * 3
+		)
+		where r > (#{num} - 1) * 3
+	]]>
+  </select>
+  
+  
+  <!-- 회원이 좋아요 누른 댓글 갯수 가져오기  -->
+  <select id="myLikeReplyCount" resultType="int">
+  	select count(*) from replyLike where id=#{id}
+  </select>
+  
+  
+  <!-- 회원이 좋아요 누른 댓글 페이징해서 가져오기 -->
+    <select id="getLikeReplyPaging" resultType="com.bookBoard.domain.ReplyBoardVO">
+  	<![CDATA[
+	   	select re_no, id, isbn, reTitle, reContent, goodCount, reReg, Restatus, bookTitle, bookCover, nickName
+	    from 
+	    (
+	        select
+	        rownum r, re_no, id, isbn, reTitle, reContent, goodCount, reReg, Restatus, bookTitle, bookCover, nickName
+	        from(
+	        select l.*, p.isbn, p.reTitle, p.reContent, p.goodCount, p.reReg, p.Restatus, p.bookTitle, p.bookCover , m.nickName
+	                    from ReplyBoard p, memberSignup m, replyLike l
+	                    where p.id = m.id
+                        and p.re_no = l.re_no
+	                    and l.id= #{id}
+	                    and p.reStatus = 1
+	                    order by l.re_no desc 
+	                )
+	            where rownum <= #{num} * 3
+		)
+		where r > (#{num} - 1) * 3
+	]]>
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

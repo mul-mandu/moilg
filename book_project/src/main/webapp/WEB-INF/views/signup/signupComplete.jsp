@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 
 
-    <!-- header 복붙 -->
+    <%-- header 복붙 --%>
 <%@ include file="../includes/header.jsp" %>
 
 <script>
 	let nick = '${nickname}';
-	console.log(nick);
+	//console.log(nick);
 </script>
 	<div class="container" id="signupBG">
             	<div class= "row">
@@ -31,5 +31,5 @@
 		
 
 
-<!-- footer 복붙 -->        
+<%-- footer 복붙 --%>        
 	<%@ include file="../includes/footer.jsp" %>

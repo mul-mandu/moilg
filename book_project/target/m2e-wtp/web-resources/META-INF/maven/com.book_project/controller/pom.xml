@@ -55,6 +55,27 @@
 		    <artifactId>ojdbc8</artifactId>
 		    <version>19.3.0.0</version>
 		</dependency>
+
+		<!-- 밑에 부터 database로 수정하기 위해 추가  -->
+		<dependency>
+			<groupId>com.oracle.database.security</groupId>
+			<artifactId>oraclepki</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.oracle.database.security</groupId>
+			<artifactId>osdt_cert</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.oracle.database.security</groupId>
+			<artifactId>osdt_core</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+		<!-- 여기까지 -->
+		
 		<!--커넥션 풀 : https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
 		<dependency>
 		    <groupId>com.zaxxer</groupId>
@@ -183,8 +204,7 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>		
-				
-				
+		
 				
 				
 		<!-- AspectJ -->

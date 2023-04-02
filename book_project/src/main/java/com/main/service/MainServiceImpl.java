@@ -41,6 +41,12 @@ public class MainServiceImpl implements MainService{
       return mapper.getAllSituListNo();
    }
 
+   // 카운트 순으로 인기 북플리 가져오기
+	@Override
+	public List<BookListVO> getBestPL() {
+		return mapper.getBestPL();
+	}
+
 
 
 }

@@ -4,7 +4,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-   <!-- header 복붙 -->
+   <%-- header 복붙 --%>
    <%@ include file="../includes/header.jsp" %>
 
 <link href="/resources/css/chartest.css" rel="stylesheet" type="text/css">
@@ -23,9 +23,9 @@ let typeResult = "";
          <button type="button" class="btn btn-primary mt-4" onclick='start();'>테스트 시작하기</button>
       </article>
       
-      <!--  질문   -->
+      <%--  질문   --%>
       <article class="question">
-         <!--  프로그레스 바  -->
+         <%--  프로그레스 바  --%>
          <div class="progress mt-5">
               <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"></div>
          </div>
@@ -44,40 +44,45 @@ let typeResult = "";
       
       
       
-      <!--  결과화면 출력  -->
-      <div id="mbit_titleText">
-         <article class="result">
-            <h1 class="mt-5 text-center"><b>나의 도서 유형 테스트 ✨</b></h1>
-            <h5>"${nick }" 님의 도서 유형은!</h5>
-            <img class="rounded-circle mt-5" id="img" src="/resources/img/lion.jpg" alt="bookType" >
-            <h2 id="bookType" class="text-center mt-5"><b>동물이름</b></h2>
-            <h4 id="explain" class="text-center mt-5">설명</h4>
-            
-            <button class="btn btn-primary mt-5" id="mbtiRecord">책 유형 테스트 결과 등록하기</button>
-            <button class="btn btn-secondary mt-5" onclick="window.location='/main/mbti'">테스트 다시하기  <i class="fa-solid fa-rotate-left"></i></button>
-            
-            
-         <br />
-         <br />
-         
-       <!--   <div class="result_recommend">
-         <h4>같은 유형의 사용자들의 북 플레이리스트 👍</h4>
-         <br />
-           <div class="owl-carousel owl-theme" >
-              <div class="owl-stage-outer">
-              	<div class="owl-stage"  id="mbtiSet">
-              	
-              	
-              	</div>
-              </div>
-            </div> 
-      </div> -->
-      </article>
-      </div>
-      
-      
-      
-      <!-- 점수처리 로직  -->
+      <%-- 결과화면 출력  --%>
+	<div id="mbit_titleText">
+		<article class="result">
+			<h1 class="mt-5 text-center">
+				<b>나의 도서 유형 테스트 ✨</b>
+			</h1>
+			<h5>"${nick }" 님의 도서 유형은!</h5>
+			<img class="rounded-circle mt-5" id="img"
+				src="/resources/img/lion.jpg" alt="bookType">
+			<h2 id="bookType" class="text-center mt-5">
+				<b>동물이름</b>
+			</h2>
+			<h4 id="explain" class="text-center mt-5">설명</h4>
+
+			<button class="btn btn-primary mt-5" id="mbtiRecord">책 유형
+				테스트 결과 등록하기</button>
+			<button class="btn btn-secondary mt-5"
+				onclick="window.location='/main/mbti'">
+				테스트 다시하기 <i class="fa-solid fa-rotate-left"></i>
+			</button>
+
+
+			<br /> <br />
+
+			<div class="result_recommend">
+				<h4>같은 유형의 사용자들의 북 플레이리스트 👍</h4>
+				<br />
+				<div class="row" id="mbtiSet">
+					
+						
+					
+				</div>
+			</div>
+		</article>
+	</div>
+
+
+
+	<%-- 점수처리 로직  --%>
       <input type="hidden" id="EI" value="0" />
       <input type="hidden" id="SN" value="0" />
       <input type="hidden" id="TF" value="0" />
@@ -170,9 +175,9 @@ let typeResult = "";
                $("#img").attr("src",result[mbti]["img"]);
                $("#bookType").html(result[mbti]["bookType"]);
                typeResult = (result[mbti]["bookType"]); 
-               console.log(typeResult);
-               console.log("테스트 완료!");
-               //getMbti(typeResult);
+               //console.log(typeResult);
+               //console.log("테스트 완료!");
+               getMbti(typeResult);
                $("#explain").html(result[mbti]["explain"]);
    
             }else{ // 아직문제를 풀고있으면
@@ -187,12 +192,12 @@ let typeResult = "";
             
          }
          
-/*          
+         
         function getMbti(mbti){
       		var setmbtiList = new Array();
         	 
-        	console.log("mbit 가져오기 실행!!");
-        	console.log("mbit : " + typeResult);
+        	//console.log("mbit 가져오기 실행!!");
+        	//console.log("mbit : " + typeResult);
         	
             $.ajax({
                   url: "/main/getMbtiPLlist.json",
@@ -200,36 +205,33 @@ let typeResult = "";
                   data : {"mbti" : mbti},
                   datatype: "JSON",
                   success: function(result) {
-                     console.log("ajax success");
-                     console.log(result);
-                     console.log("mbti가져오기 성공!! ");
+                     //console.log("ajax success");
+                     //console.log(result);
+                     //console.log("mbti가져오기 성공!! ");
                      
                      for(let i=0; i<result.length; i++){
-                    	var mbtiList =  "<div class='item'><div class='card' id='pointcard'>";
-                    	mbtiList += "<a href='/memData/bookPlistDetail?list_no="+result[i].list_no+"'>";
+                    	  var mbtiList = "<div class='col-2'><div class='onebPlist'><a href='/memData/bookPlistDetail?list_no="+result[i].list_no+"'>";
                     	mbtiList += "<img class='pointcard_img' src='/resources/save/"+result[i].packCover+"'></a>";
                     	mbtiList += "<div class='card-body'><div class='d-flex justify-content-between align-items-center'>";
                     	mbtiList += "<div class='btn-group'><h5><b>"+ result[i].bookPLTitle +"</b></h5>";
                     	mbtiList += "</div></div></div></div></div>";
                     	$("#mbtiSet").append(mbtiList);
                      }
-                    	console.log(mbtiList);
+                    	//console.log(mbtiList);
                  
                      
                   },
                   error: function(e){
-                     console.log("ajax error");
-                     console.log(e);
+                     //console.log("ajax error");
+                     //console.log(e);
                   }
                }); 
-           
-        	
-         } */
+         } 
          
          
          
          $("#mbtiRecord").on("click", function(){
-            console.log("변수 담기니 ?? : " + typeResult);
+           // console.log("변수 담기니 ?? : " + typeResult);
             let mbtiData = {'mbti' : typeResult};
             
             $.ajax({
@@ -241,15 +243,15 @@ let typeResult = "";
                         xhr.setRequestHeader(header, token);
                  },
                success   : function(result){ //요청 성공시 실행할 코드
-                  console.log("멤버 mbti 데이터 등록 성공!");
-                  console.log("result!!!! : " + result);
+                //  console.log("멤버 mbti 데이터 등록 성공!");
+                 // console.log("result!!!! : " + result);
                   // 등록 되면 ajax요청해서 mbti 데이터 가져오기
-                 // getMbti();
+                 //getMbti();
                   alert("도서 유형이 등록되었습니다.");
                },
                error: function(e){
-                  console.log("멤버 mbti 데이터 등록 에러....");
-                  console.log(" e!!! 에러 값!!!!! :" + e);
+                 // console.log("멤버 mbti 데이터 등록 에러....");
+                 // console.log(" e!!! 에러 값!!!!! :" + e);
                }
             
                
@@ -268,7 +270,7 @@ let typeResult = "";
    
 
    
-   <!-- footer  -->
+   <%-- footer  --%>
 
    <br />
    <br />
@@ -310,7 +312,7 @@ $('.carousel').carousel()
 
 <script src="jquery.min.js"></script>
 <script src="owlcarousel/owl.carousel.min.js"></script>
-   <!-- bootstrap -->
+   <%-- bootstrap --%>
    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"

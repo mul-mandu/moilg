@@ -76,11 +76,24 @@ public class MemberServiceImpl implements MemberService{
 //   }
    
    
+	//회원 관심사 갯수 가져오기 
+	@Override
+	public int getInterCount(String id) {
+		return mapper.selInterCount(id);
+	}
+  
+   
     //멤버 관심사
     @Override
     public int addInter(int internum, String id) {
        return mapper.insertInter(internum, id);
     }
+    
+    //멤버 관심사 업뎃
+	@Override
+	public int deleteInter(String id) {
+		return mapper.delInter(id);
+	}
     
     
     //회원가입후 바로 로그인 되도록
@@ -309,6 +322,12 @@ public class MemberServiceImpl implements MemberService{
       return mapper.idCheck(vo);
    }
    
+   // 아이디 중복확인 (탈퇴회원인지)
+	@Override
+	public int checkSta(MemberVO vo) {
+		return mapper.checkStatus(vo);
+	}
+   
    
    
    // pw 맞나 확인
@@ -417,7 +436,26 @@ public class MemberServiceImpl implements MemberService{
 	public List<BookListVO> getMbtiPLlist(String mbti) {
 		return mapper.getMbtiPLlist(mbti);
 	}
-   
+
+	
+	// 북플리 찜할때 count +1 하기
+	@Override
+	public int addBPCount(int list_no) {
+		return mapper.addBPCount(list_no);
+	}
+
+	
+   // 북플리 찜하기 해제하면 count -1 하기;
+	@Override
+	public int cancelBPCount(int list_no) {
+		return mapper.cancelBPCount(list_no);
+	}
+
+
+
+
+
+
    
 }
    

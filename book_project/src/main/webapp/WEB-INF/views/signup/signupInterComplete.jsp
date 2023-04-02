@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-    <!-- header 복붙 -->
+    <%-- header 복붙 --%>
 <%@ include file="../includes/header.jsp" %>
 <script>
 	let nick = '${nickname}';
-	console.log(nick);
+	//console.log(nick);
 
 </script>
 
@@ -38,5 +38,5 @@
 
 
 
-<!-- footer 복붙 -->        
+<%-- footer 복붙 --%>        
 	<%@ include file="../includes/footer.jsp" %>

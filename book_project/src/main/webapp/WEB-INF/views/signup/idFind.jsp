@@ -82,5 +82,5 @@
 
 
 
-<!-- footer 복붙 -->        
+<%-- footer 복붙 --%>        
    <%@ include file="../includes/footer.jsp" %>

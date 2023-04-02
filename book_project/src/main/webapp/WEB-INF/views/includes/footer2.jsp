@@ -9,7 +9,7 @@
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="col-md-4 d-flex align-items-center">
         <a href="/main/main"><img src="/resources/img/logo_kr.png" width="80px"/></a>
-      <span class="mb-3 mb-md-0 text-muted">&copy; molig company, 2022</span>
+      <span class="mb-3 mb-md-0 text-muted"> &copy; moilg / moilg2023@gmail.com</span>
     </div>
     <div>
 		<span class="mb-12 mb-md-0 text-muted">Partners</span>
@@ -48,7 +48,7 @@ $('.carousel').carousel()
 
 <script src="jquery.min.js"></script>
 <script src="owlcarousel/owl.carousel.min.js"></script>
-	<!-- bootstrap -->
+	<%-- bootstrap --%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"

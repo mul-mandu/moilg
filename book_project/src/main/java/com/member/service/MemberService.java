@@ -24,9 +24,14 @@ public interface MemberService {
    //회원 관심사 정보 담기
    //public MemberInterVO addInter(String id); 
    
+   //회원 관심사 갯수 가져오기 
+   public int getInterCount(String id);
+   
    //회원 관심사 정보 담기
    public int addInter(int internum, String id); 
    
+   //회원 관심사 정보 삭제하기
+   public int deleteInter(String id);
    
    //가입후 로그인처리 
    public void autoLogin(String username);
@@ -68,6 +73,9 @@ public interface MemberService {
    
    // 아이디 중복확인
    public int idCheck(MemberVO vo);
+   
+   // 아이디 중복확인 (탈퇴 회원인지)
+   public int checkSta(MemberVO vo);
    
    // 비밀번호 맞나 확인
    public int pwCheck(MemberVO vo);
@@ -171,5 +179,10 @@ public interface MemberService {
    // mbti에 해당하는 플리 가져오기
    public List<BookListVO> getMbtiPLlist(String mbti);
    
+   // 북플리 찜할때 count +1 하기
+   public int addBPCount (int list_no);
+   
+   // 북플리 찜하기 해제하면 count -1 하기;
+   public int cancelBPCount(int list_no);
    
 }

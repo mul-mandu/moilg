@@ -57,12 +57,23 @@
   </insert>
   -->
   
+  <!-- 관심사 갯수 가져오기 -->
+  <select id="selInterCount" resultType="int">
+  	select count(*) from memberSignupInter 
+  	where id=#{id}
+  </select>
+  
   <!-- 관심사 설정 -->
   <insert id="insertInter" parameterType="map">
       insert into memberSignupInter(id, keyword_no) 
       values(#{id}, #{keyword_no})
   </insert>
   
+  <!-- 관심사 삭제 -->
+  <delete id="delInter">
+  	delete memberSignupInter
+  	where id=#{id}
+  </delete>
   
   
   <!-- 멤버 mbti 등록(update) -->
@@ -112,12 +123,12 @@
   <!-- 키워드 넘버 주고 북플리List 가져오기 (장르) -->
   <select id="selectGBookList" resultType="com.member.domain.BookListVO">
    select * from BookList where listStatus=0
-<!--    <if test="list != null">
+	<if test="list != null">
        and list_no in 
    <foreach collection="list" item="item" open="(" close=")" separator=",">
       #{item}
    </foreach>
-   </if> -->
+   </if>
   </select>
   
   
@@ -140,6 +151,10 @@
      select count(*) from memberSignup where id=#{id}
   </select>
   
+  <!-- id 중복확인 -->
+   <select id="checkStatus" resultType="int">
+     select memStatus from memberSignup where id=#{id}
+  </select>
   
     <!-- 닉네임 중복확인  -->
   <select id="nickNameCheck" resultType="int">
@@ -186,30 +201,7 @@
      select auth from memberSignup_auth where id=#{id}
   </select>
   
-  
- 
-  
-<!--   <update id="updateMember"> -->
-<!--         update memberSec set name=#{name}, email=#{email} -->
-<!--         where id =#{id} -->
-<!--   </update> -->
-  
-  
-<!--   <delete id="deleteMember"> -->
-<!--         delete from memberSec where id =#{id} -->
-<!--   </delete> -->
-  
-<!--   <delete id="deleteAuth"> -->
-<!--         delete from memberSec_auth where id =#{id} -->
-<!--   </delete> -->
-  
-  
-<!--   <select id="idpwCheck" resultType="int"> -->
-<!--         select count(*) from memberSec where id=#{id} -->
-<!--         <if test="pw != null"> -->
-<!--         and pw =#{pw} -->
-<!--         </if> -->
-<!--   </select> -->
+
   
   
      <!-- 북리스트 생성  -->
@@ -323,8 +315,13 @@
   <insert id="addScrapRDList">
         insert into scrapRDList(id, list_no)
         values(#{id}, #{list_no})
-  
   </insert>
+  
+  <!-- 북플리 찜하기 하면 카운트 +1 하기 -->
+  <update id="addBPCount">
+  		update BookList set scrapCount= scrapCount + 1
+		where list_no=#{list_no}
+  </update>
   
   
   <!-- 북플리 찜하기 해제  -->
@@ -332,6 +329,12 @@
      delete from scrapRDList where list_no = #{list_no} and id=#{id}
   </delete>
   
+  
+  <!-- 북플리 찜하기 해제 하면 카운트 -1 하기 -->
+  <update id="cancelBPCount">
+  		update BookList set scrapCount= scrapCount - 1
+		where list_no=#{list_no}
+  </update>
   
   
   <!-- 북플레이 리스트에 도서 추가  -->

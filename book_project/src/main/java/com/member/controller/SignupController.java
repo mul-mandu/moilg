@@ -118,7 +118,11 @@ public class SignupController {
       @PostMapping(value="signupInterPro", consumes = "application/json"
             ,produces = {MediaType.TEXT_PLAIN_VALUE})
       public ResponseEntity<String> signupInterPro(@RequestBody List<String> interList, Authentication auth) {
-         log.info("********************************************* + signupInter 처리  요청!!!!!!!!");
+    	 int result = 0;
+    	 int keyword_no;
+    	 int del;
+         
+    	 log.info("********************************************* + signupInter 처리  요청!!!!!!!!");
          log.info("********************************************* + 가져온 inter : " + interList);
          
          // Authentication 매개변수 선언하면 principal등 정보 꺼낼 수 있다.
@@ -126,14 +130,26 @@ public class SignupController {
          String id = user.getUsername();
          log.info("멤버 아뒤: " + id);
          
-         int result = 0;
-         for(int i = 0; i < interList.size(); i++) {
-            String internum = interList.get(i);
-            int keyword_no = Integer.parseInt(internum);
-            log.info("*********int 형변환 키워드 넘버 : " + keyword_no);
-            
-            result = service.addInter(keyword_no, id);
-         }
+         //아이디 주고 관심사 count 해오기 
+         int interCount = service.getInterCount(id);
+         
+         if(interCount == 0) { //interCount가 0이면 == 등록된 관심사가 없으면, 새로 insert 하고
+	         for(int i = 0; i < interList.size(); i++) {
+	            String internum = interList.get(i);
+	            keyword_no = Integer.parseInt(internum);
+	            log.info("*********int 형변환 키워드 넘버 : " + keyword_no);
+	            result = service.addInter(keyword_no, id);
+	         }//for문
+         }else {
+        	 //원래 있던 관심사 목록을 삭제하고
+        	 del = service.deleteInter(id);
+        	 for(int i = 0; i < interList.size(); i++) {
+ 	            String internum = interList.get(i);
+ 	            keyword_no = Integer.parseInt(internum);
+ 	            log.info("*********int 형변환 키워드 넘버 : " + keyword_no);
+ 	            result = service.addInter(keyword_no, id);
+ 	         }//for문
+         }//else 끝
          
          log.info("관심사 등록 result!!!! (성공시 1) : " + result );
          
@@ -197,7 +213,8 @@ public class SignupController {
                   
                   
                   //파일 저장 경로 
-                  String path = request.getRealPath("/resources/save"); // 서버상의 save 폴더 위치
+                  //String path = request.getRealPath("/resources/save"); // 서버상의 save 폴더 위치
+                  String path = "/var/lib/tomcat9/webapps/save";
                   log.info("************save path : " + path);
                   //새 파일명 생성
                   String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase(); 
@@ -210,7 +227,8 @@ public class SignupController {
                   String newFilename = uuid + ext; 
                   log.info("************최종저장할 이름 : " + newFilename );
                   //저장할 파일 전체 경로
-                  String  imgPath = path + "\\" + newFilename;
+                  //String  imgPath = path + "\\" + newFilename;
+                  String  imgPath = path + "/" + newFilename;
                   log.info("************imgPath: " + imgPath );
                   
                   log.info("패키지 제발 저장좀 해주면 안되겠니?????????????????????????????????????????");
@@ -259,7 +277,8 @@ public class SignupController {
                
                
                //파일 저장 경로 
-               String path = request.getRealPath("/resources/save"); // 서버상의 save 폴더 위치
+               //String path = request.getRealPath("/resources/save"); // 서버상의 save 폴더 위치
+               String path = "/var/lib/tomcat9/webapps/save";
                log.info("************save path : " + path);
                //새 파일명 생성
                String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase(); 
@@ -272,7 +291,8 @@ public class SignupController {
                String newFilename = uuid + ext; 
                log.info("************최종저장할 이름 : " + newFilename );
                //저장할 파일 전체 경로
-               String  imgPath = path + "\\" + newFilename;
+               //String  imgPath = path + "\\" + newFilename;
+               String  imgPath = path + "/" + newFilename;
                log.info("************imgPath: " + imgPath );
                
                log.info("패키지 제발 저장좀 해주면 안되겠니?????????????????????????????????????????");
@@ -390,7 +410,12 @@ public class SignupController {
         // rssult == 0 => 사용가능한 아이디
         String data = null;   // jsp ajax success 함수 매개변수에 전달할 결과 변수
         if(result ==1) {
-           data ="이미 사용중인 ID 입니다.";
+        	int reresult = service.checkSta(vo);
+        	if(reresult == 1) {
+        		data ="이미 사용중인 ID 입니다.";
+        	}else if (reresult == 0) {
+        		data ="사용할 수 없는 ID 입니다.";
+        	}
         }else {
            data ="사용 가능한 ID 입니다.";
         }
