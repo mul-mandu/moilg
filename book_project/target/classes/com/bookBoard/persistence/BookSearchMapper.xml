@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.bookBoard.persistence.BookSearchMapper">
+  
+	<!-- 댓글추가 -->
+	<insert id="insertReply" >
+		insert into ReplyBoard(re_no, id, isbn, reTitle, reContent, bookTitle, bookCover)
+		values(re_no_seq.nextval, #{id}, #{isbn}, #{reTitle}, #{reContent}, #{bookTitle}, #{bookCover})
+	</insert>
+
+
+	<!-- isbn에 해당하는 댓글 전체 가져오기 -->
+	<select id="getReplyList" resultType="com.bookBoard.domain.ReplyBoardVO">
+		select r.*, m.photo, m.nickName 
+		from ReplyBoard r, memberSignup m 
+		where r.id = m.id
+		and isbn=#{isbn}
+		and reStatus=1
+		order by reReg desc
+	</select>
+
+  
+	  <!-- 댓글 수 카운트 -->
+	  <select id="selReTotCount" resultType="int">
+		  select count(*) from ReplyBoard
+		  where isbn=#{isbn}
+		  and reStatus=1
+	  </select>
+
+
+  	<!-- 댓글 삭제하기 (상태값 변경하기) -->		
+  	<update id="deleteReply">
+	  	update ReplyBoard set reStatus=0
+	  	where re_no=#{re_no}
+  	</update>
+  
+  
+  	<!-- 댓글 수정하기 -->
+  	<update id="updateReply">
+	  	update ReplyBoard set reTitle=#{reTitle}, reContent=#{reContent}
+	  	where re_no=#{re_no}
+  	</update>
+  	
+  	<!-- re_no에 해당하는 좋아요한 ID 가져오기 -->
+  	<select id="selLikeId" resultType="String">
+  		select id from replyLike
+  		where re_no=#{re_no} 
+  	</select>
+  	
+  	<!-- 댓글 공감하기 (추가) -->
+  	<insert id="likeInsertReply">
+  		<if test="id != #{id}">
+  		insert into replyLike(re_no, id)
+		values(#{re_no}, #{id})
+		</if>
+  	</insert>
+  	
+  	<!-- 공감하기 버튼 눌렀을시 goodCount +1 -->
+  	<update id="updateGoodCount">
+  		update ReplyBoard set goodCount=goodCount+1
+	  	where re_no=#{re_no}
+  	</update>
+  	
+  	<!-- 공감한 댓글 삭제하기 (댓글창에서) -->
+  	<delete id="deleteLikeReply">
+  		delete from replyLike
+  		where id=#{id}
+  	</delete>
+  	
+  	<!-- 공감한 댓글 삭제 후 goodCount -1 -->
+	<update id="deleteGoodCount">
+  		update ReplyBoard set goodCount=goodCount-1
+	  	where re_no=#{re_no}
+  	</update>
+
+	<!-- 내가 작성한 댓글 가져오기 -->
+	<select id="selMyReply" resultType="com.bookBoard.domain.ReplyBoardVO">
+		select r.*, m.nickName
+		from ReplyBoard r, memberSignup m
+		where r.id = m.id
+		and r.id=#{id}
+		and reStatus = 1
+	</select>
+	
+	
+
+	<!-- 내가 공감한 댓글 re_no 가져오기 -->
+	<select id="selLikeNum" resultType="Integer">
+		select re_no from replyLike
+		where id=#{id}
+	</select>
+
+	<!-- 공감한 re_no의 댓글 -->
+	<select id="selLikeList" resultType="com.bookBoard.domain.ReplyBoardVO">
+		select r.* , o.bookTitle
+		from ReplyBoard r, OneBookList o
+		where r.isbn = o.isbn
+		and re_no=#{re_no}
+		and reStatus = 1
+	</select>
+	
+	
+	<!-- 키워드가 포함된 북플리 모두 검색  -->
+	<select id="getKeyPLlist" resultType="com.member.domain.BookListVO">
+		select b.*
+		from BookList b, BookPLKeyword k
+		where b.list_no = k.list_no
+		and b.listStatus = 0
+		and keyword_no= #{keyword_no}
+	</select>
+	
+	
+	<!-- 검색한 북플리 가져오기  -->
+	<select id="getSearchBPLlist" resultType="com.member.domain.BookListVO">
+		select * from BookList 
+		where bookpltitle Like '%' || #{search} || '%'
+		and listStatus = 0
+	
+	</select>
+	
+
+  </mapper>

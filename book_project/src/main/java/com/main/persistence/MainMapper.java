@@ -8,6 +8,9 @@ public interface MainMapper {
    
    //전체 플레이 리스트 가져오기
    public List<BookListVO> getAllPL();
+   
+   // 인기 북플리 리스트 가져오기
+   public List<BookListVO> getBestPL();
 
    //장르 플레이 리스트 넘버 가져오기 (전체)
    public List<Integer> getAllGenreListNo();

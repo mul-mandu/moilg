@@ -38,6 +38,10 @@
         <beans:property name="maxInMemorySize" value="104857600" />
         
     </beans:bean>
+    
+   <!--  <beans:bean id="uploadPath" class="java.lang.String">
+    	<beans:constructor-arg value="/var/lib/tomcat9/webapps/save"></beans:constructor-arg>
+    </beans:bean> -->
 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

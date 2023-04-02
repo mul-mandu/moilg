@@ -133,7 +133,7 @@ public class MemDataController {
                   
                   
                   //파일 저장 경로 
-                  String path = request.getRealPath("/resources/save"); // 서버상의 save 폴더 위치
+                  String path = "/var/lib/tomcat9/webapps/save"; // 서버상의 save 폴더 위치
                   log.info("************save path : " + path);
                   //새 파일명 생성
                   String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase(); 
@@ -146,7 +146,7 @@ public class MemDataController {
                   String newFilename = uuid + ext; 
                   log.info("************최종저장할 이름 : " + newFilename );
                   //저장할 파일 전체 경로
-                  String  imgPath = path + "\\" + newFilename;
+                  String  imgPath = path + "/" + newFilename;
                   log.info("************imgPath: " + imgPath );
                   
                   log.info("패키지 제발 저장좀 해주면 안되겠니?????????????????????????????????????????");
@@ -190,6 +190,7 @@ public class MemDataController {
             int result = 0;
             log.info("팩커버 get 해보기!!!!!!!!!!!!!!!!!!!!" + pack.getPackCover());
             
+             log.info("request 체크 !!!!!!!!!!!!!!!!!!!!" + request);
 
                if(request.getFile("packCoverFile") == null) {//파일 안넘어왔을때 //db에 인서트
                   log.info("파일 안넘어왔을때 체크중~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -212,7 +213,8 @@ public class MemDataController {
                      
                      
                      //파일 저장 경로 
-                     String path = request.getRealPath("/resources/save"); // 서버상의 save 폴더 위치
+                     String path = "/var/lib/tomcat9/webapps/save"; // 서버상의 save 폴더 위치
+                     //String path = request.getRealPath("/resources/save");
                      log.info("************save path : " + path);
                      //새 파일명 생성
                      String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase(); 
@@ -225,7 +227,8 @@ public class MemDataController {
                      String newFilename = uuid + ext; 
                      log.info("************최종저장할 이름 : " + newFilename );
                      //저장할 파일 전체 경로
-                     String  imgPath = path + "\\" + newFilename;
+                     String  imgPath = path + "/" + newFilename;
+                     //String  imgPath = path + "\\" + newFilename;
                      log.info("************imgPath: " + imgPath );
                      
                      log.info("패키지 제발 저장좀 해주면 안되겠니?????????????????????????????????????????");
@@ -462,8 +465,12 @@ public class MemDataController {
          ,produces = {MediaType.TEXT_PLAIN_VALUE})
    public ResponseEntity<String> scrapRDList(@RequestBody ScrapRDListVO vo){
       log.info("*********** 추가요청된  listNum : " + vo);
-      int result = service.addScrapRDList(vo); 
+      int result = service.addScrapRDList(vo);
       log.info("addScrapRDList result!!!!!!! : " + result);
+      
+      int addresult = service.addBPCount(vo.getList_no());
+      log.info("addBPCount result!!!!!!! : " + addresult);
+      
       return result == 1 ? new ResponseEntity<String>("success!", HttpStatus.OK)
             : new ResponseEntity<String>("fail....",HttpStatus.INTERNAL_SERVER_ERROR);
    }
@@ -476,6 +483,10 @@ public class MemDataController {
          log.info("*********** 삭제요청된  listNum : " + vo);
          int result = service.cancelScrapRDList(vo); 
          log.info("addScrapRDList result!!!!!!! : " + result);
+         
+         int cancleResult = service.cancelBPCount(vo.getList_no());
+         log.info("cancleResult result!!!!!!! : " + cancleResult);
+         
          return result == 1 ? new ResponseEntity<String>("success!", HttpStatus.OK)
                : new ResponseEntity<String>("fail....",HttpStatus.INTERNAL_SERVER_ERROR);
       }

@@ -30,24 +30,42 @@
 	
 	
 	<!-- 커넥션풀 : DB접근 가능하게 -->
-	<!-- 커넥션에 log 결과 받을 수 있는 API 추가한 경로로 세팅  -->
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	<!-- 커넥션에 log 결과 받을 수 있는 API 추가한 경로로 세팅 -->
+<!-- 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:ORCL" />
-		<property name="username" value="system" />
-		<property name="password" value="431612" />
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-seoul-1.oraclecloud.com))(connect_data=(service_name=g50627b6a76bff0_moilgdatabase_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))" />
+		<property name="username" value="admin" />
+		<property name="password" value="Mo1G2023haha" />
 	</bean>	
-	
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
-	</bean>
+	</bean> -->
 	
-   	<!--  MyBatis 연동 설정 -->
+
+	
+	
+ 	<bean id="dataSource" class="oracle.ucp.jdbc.PoolDataSourceImpl">
+		<property name="URL"
+			value="jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1521)(host=adb.ap-seoul-1.oraclecloud.com))(connect_data=(service_name=g50627b6a76bff0_moilgdatabase_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))" />
+		<property name="user" value="admin" />
+		<property name="password" value="Mo1G2023haha" />
+		<property value="oracle.jdbc.pool.OracleDataSource" name="connectionFactoryClassName" />
+		<property name="maxPoolSize" value="50" />
+		<property name="initialPoolSize" value="15" />
+	</bean> 
+	
+	
+   	 <!-- MyBatis 연동 설정  -->
   	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
    	   <property name="dataSource" ref="dataSource"/>
+   	   <property name="configLocation" value="/WEB-INF/spring/mybatis/mybatis-config.xml"/>
+   	   
   	 </bean>
+  	 
+  	 
     <!-- Mapper 스캔하도록 설정 -->
+  	 <mybatis-spring:scan base-package="com.bookBoard.persistence"/>
   	 <mybatis-spring:scan base-package="com.member.persistence"/>
   	 <mybatis-spring:scan base-package="com.sentence.persistence"/>
   	 <mybatis-spring:scan base-package="com.mypage.persistence"/>
@@ -57,6 +75,7 @@
 	 
 	<!-- 서비스 패키지 스캔하여, @Component , @Service등 어노테이션 붙은 클래스 
 	스프링빈으로 등록하도록 설정 (빈으로 등록해야 객체가 생성되고 메서드 실행가능) -->
+	<context:component-scan base-package="com.bookBoard.service" />
 	<context:component-scan base-package="com.member.service" />
 	<context:component-scan base-package="com.sentence.service" />
 	<context:component-scan base-package="com.mypage.service" />

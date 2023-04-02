@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!-- header 복붙 -->
+    <%-- header 복붙 --%>
 <%@ include file="../includes/header.jsp" %>
    <link href="/resources/css/mypage.css" rel="stylesheet" type="text/css">   
    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
-      <!-- bootstrap -->
+      <%-- bootstrap --%>
    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
@@ -84,7 +84,7 @@
   } );
   </script>
 
-<!-- 마이페이지 이미지 -->
+<%-- 마이페이지 이미지 --%>
    <div class="container" >
       <div class="mypageTOP">
          <div class="image-box" >
@@ -108,7 +108,7 @@
                <label for="backFile" >
                   <img id="backEditImg" src="/resources/img/edit.png" style="width: 25px;"/>
                </label>
-               <button type="button" id="bgCheckBtn"><img src="/resources/img/check.png" style="width: 20px;" /></button>
+               <button type="button" id="bgCheckBtn"><img src="/resources/img/check.png" style="width: 25px;" /></button>
                <input type="file" name="file" id="backFile" style="display: none;" >
             </div>
             </c:otherwise>
@@ -124,7 +124,7 @@
                <label for="file" >
                   <img id="editImg" src="/resources/img/edit.png" style="width: 25px;"/>
                </label>
-               <button type="button" id="profileCheckBtn"><img src="/resources/img/check.png" style="width: 20px;" /></button>
+               <button type="button" id="profileCheckBtn"><img src="/resources/img/check.png" style="width: 25px;" /></button>
             </div>
                 <input type="file" name="file" id="file" style="display: none;" >
            </c:when>
@@ -136,7 +136,7 @@
                <label for="file" >
                   <img id="editImg" src="/resources/img/edit.png" style="width: 25px;"/>
                </label>
-               <button type="button" id="profileCheckBtn"><img src="/resources/img/check.png" style="width: 20px;" /></button>
+               <button type="button" id="profileCheckBtn"><img src="/resources/img/check.png" style="width: 25px;" /></button>
             </div>
             <input type="file" name="file" id="file" style="display: none;" >
            </c:otherwise>
@@ -151,7 +151,7 @@
    
    
    
-      <!-- 마이페이지 메뉴바 -->
+      <%-- 마이페이지 메뉴바 --%>
          <div class="row">
             <div class="col-3">
                <div id="mpMbtiBox">
@@ -171,11 +171,11 @@
                         <span style="font-size:15px;">독서유형</span>
                      </div>  
                   </div>
-               </div> <!-- MBTI박스 -->
+               </div> <%-- MBTI박스 --%>
                <br />
                
                
-               <!-- 사이드 메뉴바 -->
+               <%-- 사이드 메뉴바 --%>
                <div>
                   <ul class="nav flex-column tab_title" >
                      <li class="nav-link on">나의 북플리</li>
@@ -186,26 +186,26 @@
                      <li class="nav-link disabled" >배너 관리</li>      <!-- 추후 사용시 open -->
                   </ul>
                </div>
-            </div> <!-- 사이드 메뉴바 -->
+            </div> <%-- 사이드 메뉴바 --%>
             
             
-            <!-- 사이드 메뉴 콘텐츠 -->
+            <%-- 사이드 메뉴 콘텐츠 --%>
             <div class="col-9">
                  <div class="tab_cont">
                      <div class="on">
                         <h2>나의 북플리</h2>
                         <hr />  
-                         <!-- CONTENTS 안의 탭메뉴 -->            
+                         <%-- CONTENTS 안의 탭메뉴 --%>            
                               <div>
                                  <ul class="nav nav-tabs" >
                               <li class="nav-link onandon">나의 북플리</li>
                               <li class="nav-link onandon">찜한 북플리</li>
                                  </ul>
                               </div>            
-                         <!-- contents 탭메뉴의 내용-->
+                         <%-- contents 탭메뉴의 내용--%>
                          <div class="tab_cont2">
                             <div class="onandon">
-                   <!-- 나의 북플리 뿌리기 -->
+                   <%-- 나의 북플리 뿌리기 --%>
                               <br />
                              <button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="window.location='/memData/bookPlistMakeForm'">+ 추가</button> 
                              <br />    
@@ -220,12 +220,12 @@
                                                    <span>${bookPL.bookPLTitle}</span>
                                                 </a>
                                             </div>
-                                         </div> <!-- item --> 
+                                         </div> <%-- item --%> 
                                       </c:forEach>
-                                 </div> <!-- row -->
+                                 </div> <%-- row --%>
                             </div>
                             </div>
-                              <!-- 찜한 북플리 뿌리기 -->
+                              <%-- 찜한 북플리 뿌리기 --%>
                                <div style="display:none;">
                                <div class="container">
                              <div class="row">
@@ -235,30 +235,30 @@
                                           <img id="mybpliListImg" src="/resources/img/sample4.jpg">
                                           </a>
                                       </div>
-                                </div> <!-- item --> 
-                              </div> <!-- row -->
+                                </div> <%-- item --%> 
+                              </div> <%-- row --%>
                          </div>
                                </div>
                            </div>
-                        </div> <!-- on -->
+                        </div> <%-- on --%>
                         
                         
-                         <!-- 나의 댓글 -->
+                         <%-- 나의 댓글 --%>
              <div style="display:none;">
                <h2>나의 댓글</h2>
                <hr />
-              <!-- CONTENTS 안의 탭메뉴 -->            
+              <%-- CONTENTS 안의 탭메뉴 --%>            
                  <div>
                   <ul class="nav nav-tabs" >
          <li class="nav-link onandon">내가 작성한 댓글</li>
          <li class="nav-link onandon">내가 공감한 댓글</li>
                     </ul>
                  </div>
-                        <!-- contents 탭메뉴의 내용-->
+                        <%-- contents 탭메뉴의 내용--%>
                  <div class="tab_cont3">
                     <div class="onandon">
                        <br />   
-                  <!-- 나의 댓글 목록 뿌리기 -->
+                  <%-- 나의 댓글 목록 뿌리기 --%>
                       <table id="listTable"> 
                       <thead id="replyList">
                      <tr>
@@ -278,7 +278,7 @@
                        </div>   
                        <div style="display:none;">
                           <br />   
-                     <!-- 나의 공감 목록 뿌리기 -->
+                     <%-- 나의 공감 목록 뿌리기 --%>
                          <table id="listTable"> 
                          <thead id="replyList">
                         <tr>
@@ -296,17 +296,17 @@
                      </tbody>
                          </table>
                     </div>   
-               </div> <!--  div tab_cont5 -->
-            </div><!-- 메뉴 끝 -->   
+               </div> <%--  div tab_cont5 --%>
+            </div><%--메뉴 끝 --%>   
       
             
                         
                         
-            <!-- 회원관리 -->           
+            <%-- 회원관리 --%>           
             <div style="display:none;">
                      <h2>회원관리</h2>
                      <hr />
-                    <!-- contents 탭메뉴의 내용-->
+                    <%-- contents 탭메뉴의 내용--%>
                    <%-- 작성자/내용 검색 --%>
                <form action="adminMypage.jsp" align="right">
                   <select name="sel">
@@ -320,7 +320,7 @@
                
                           <br />   
                           <br />   
-                   <!-- 회원 목록 뿌리기 -->
+                   <%-- 회원 목록 뿌리기 --%>
                        <table id="listTable"> 
                          <thead id="replyList">
                         <tr>
@@ -353,7 +353,7 @@
           </div>   
           
          
-         <!-- 키워드 관리 -->
+         <%-- 키워드 관리 --%>
          <div style="display:none;">
             <h2>키워드 관리</h2>
               <hr />
@@ -364,7 +364,7 @@
             </div>
             <br />
             <br />
-            <!-- 키워드 리스트 보여주는 곳 -->
+            <%-- 키워드 리스트 보여주는 곳 --%>
             <div>
                <h4><b>키워드 리스트</b></h4>
             </div>
@@ -376,24 +376,24 @@
                   </div>
             </div>
           </div>
-         </div><!--키워드 관리 메뉴 끝 -->
+         </div><%--키워드 관리 메뉴 끝 --%>
          
          
-         <!-- 대문관리 -->
+         <%-- 대문관리 --%>
          <div style="display:none;">
                <h2>대문 관리</h2>
               <hr />
-              <!-- CONTENTS 안의 탭메뉴 -->            
+              <%-- CONTENTS 안의 탭메뉴 --%>            
                      <div>
                         <ul class="nav nav-tabs" >
                      <li class="nav-link onandon">오늘의 문구 관리</li>
                      <li class="nav-link onandon">대문 영상 관리</li>
                         </ul>
                      </div>
-              <!-- contents 탭메뉴의 내용-->
+              <%-- contents 탭메뉴의 내용--%>
                       <div class="tab_cont4">
                          <div class="onandon">
-                          <!-- 나의 오늘의 문구 뿌리기 -->
+                          <%-- 나의 오늘의 문구 뿌리기 --%>
                           <br />
                         <button type="button" id="todaySentenceAddBtn" class="btn btn-primary btn-sm" style="float: right"> + 추가</button>
                         <br />  
@@ -428,14 +428,14 @@
                            </tbody>
                                </table>
                             </div>
-                        </div> <!--  onandon -->
+                        </div> <%--  onandon --%>
        
                         
                         
                         
                         
                         <div style="display:none;">
-                        <!-- 대문 영상 뿌리기 -->
+                        <%-- 대문 영상 뿌리기 --%>
                           <br />
                           <form action="signupPro.jsp" method="post" enctype="multipart/form-data">
                              <table id="listTable"> 
@@ -486,12 +486,12 @@
                                </table>
                             </form>
                         </div>
-                      </div> <!--  탭 콘3  -->
-         </div> <!-- 대문관리 메뉴 끝 -->
+                      </div> <%--  탭 콘3  --%>
+         </div> <%-- 대문관리 메뉴 끝 --%>
          
          
          
-           <!-- 배너관리 메뉴 -->
+           <%-- 배너관리 메뉴 --%>
         <div style="display:none;">
            <h2>배너관리</h2>
                  <hr />
@@ -523,26 +523,26 @@
                            </tbody>
                    </table>
                 </form>
-        </div><!-- 배너 관리 메뉴 끝 -->
+        </div><%-- 배너 관리 메뉴 끝 --%>
         
         
-               </div> <!-- tab_cont -->
-            </div>   <!-- col-9 -->
-      </div> <!-- 큰 row -->
-   </div>   <!-- 제일 큰 container -->
+               </div> <%-- tab_cont --%>
+            </div>   <%-- col-9 --%>
+      </div> <%-- 큰 row --%>
+   </div>   <%-- 제일 큰 container --%>
    
    
 <script>
 
 $(document).ready(function() {
  $("#foreachTbody").on("click", ".statusStopBtn",function(){
-   console.log("활동 정지 버튼 클릭!!!");
-   console.log($(this));
+   //console.log("활동 정지 버튼 클릭!!!");
+   //console.log($(this));
    
     trTag = $(this).parent().parent().clone();     
-   console.log(trTag.html());
+   //console.log(trTag.html());
      var id = trTag.find("#memberId").text();
-     console.log("id~~~~~~~~~~~~~~~~~ " + id); 
+     //console.log("id~~~~~~~~~~~~~~~~~ " + id); 
    var data = {"id" : id};
      
   //ajax 보내기
@@ -556,13 +556,13 @@ $(document).ready(function() {
              xhr.setRequestHeader(header, token);
          },
          success: function(result) {
-            console.log("ajax success");
-            console.log(result);
+            //console.log("ajax success");
+            //console.log(result);
               $(this).attr("disabled", true);
          },
          error: function(e){
-            console.log("ajax error");
-            console.log(e);
+            //console.log("ajax error");
+            //console.log(e);
             
          }
          
@@ -635,16 +635,16 @@ $(document).ready(function() {
     
  
  $('#profileCheckBtn').on("click", function(){
-    console.log("프로필 수정 하기!!!!!")
+    //console.log("프로필 수정 하기!!!!!")
     //프로필 이미지 담아서 ajax 날리기
     var data = new FormData();
     var file = $('#file')[0].files[0];
     
     data.append('profile', file);
-    console.log(data.get('profile'));
+    //console.log(data.get('profile'));
     
     for (var pair of data.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
+            //console.log(pair[0]+ ', ' + pair[1]);
      }
     
        // 내 프로필 ajax 보내기
@@ -659,13 +659,13 @@ $(document).ready(function() {
              xhr.setRequestHeader(header, token);
           },
           success: function(result){
-              console.log("프로필 등록 성공!!!!!");
-              console.log(result);
+             // console.log("프로필 등록 성공!!!!!");
+             // console.log(result);
               alert("프로필 등록이 완료 되었습니다!🖼");
            },
            error: function(e){
-              console.log("프로필 등록 요청 에러......");
-              console.log(e);
+             // console.log("프로필 등록 요청 에러......");
+             // console.log(e);
            }
        })//에이작스
     
@@ -696,16 +696,16 @@ $(document).ready(function() {
     
  
  $('#bgCheckBtn').on("click", function(){
-    console.log("프로필 수정 하기!!!!!")
+    //console.log("프로필 수정 하기!!!!!")
     //프로필 이미지 담아서 ajax 날리기
     var data = new FormData();
     var file = $('#backFile')[0].files[0];
     
     data.append('bgFile', file);
-    console.log(data.get('bgFile'));
+    //console.log(data.get('bgFile'));
     
     for (var pair of data.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
+            //console.log(pair[0]+ ', ' + pair[1]);
      }
     
        // 내 프로필 ajax 보내기
@@ -720,13 +720,13 @@ $(document).ready(function() {
              xhr.setRequestHeader(header, token);
           },
           success: function(result){
-              console.log("배경 등록 성공!!!!!");
-              console.log(result);
+              //console.log("배경 등록 성공!!!!!");
+              //console.log(result);
               alert("배경 등록이 완료 되었습니다!😎");
            },
            error: function(e){
-              console.log("배경 등록 요청 에러......");
-              console.log(e);
+              //console.log("배경 등록 요청 에러......");
+              //console.log(e);
            }
        })//에이작스
     
@@ -751,5 +751,5 @@ $(document).ready(function() {
 
 
 
-<!--  footer 복붙 --> 
-   <%@ include file="../includes/footer3.jsp" %>
+<%--  footer 복붙 --%> 
+   <%@ include file="../includes/footer.jsp" %>

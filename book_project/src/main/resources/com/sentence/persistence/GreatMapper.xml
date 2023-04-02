@@ -2,52 +2,172 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.sentence.persistence.GreatMapper">
-   
-   
-   <!-- 인생문장 추가 -->
-    <insert id="addSenten">
-  		insert into greatSentence(great_no, id, greatContent, greatImg, greatIsbn, greatBookTitle) 
-  		values(great_no_seq.nextval, #{id}, #{greatContent}, #{greatImg}, #{greatIsbn}, #{greatBookTitle})
-  	</insert>
-  	
-  	
-  	 <!-- id에 맞는 인생문장 가져오기 -->
-     <select id="getAllMemSen" resultType="com.sentence.domain.SentenceVO">
-        select * from greatSentence where id=#{id}
-     </select>
-  
-  
-  
-  <!-- 인생문장 모두 가져오기 
-	<resultMap type="com.sentence.domain.SentenceVO" id="sentenceMap">
-		<id property="id" column="id"/>
-		<result property="id" column="id" />
-		<result property="great_no" column="great_no" />
-     	<result property="greatContent" column="greatContent" />
-      	<result property="greatImg" column="greatImg" />
-      	<result property="greatLikeCount" column="greatLikeCount" />
-      	<result property="greatContentStatus" column="greatContentStatus" />
-      	<result property="greatReg" column="greatReg" />
-      	<collection property="nickName" resultMap="memberMap"></collection>
-	</resultMap>
-   <resultMap type="com.member.domain.MemberVO" id="memberMap">
-      <result property="id" column="nickName" />
-      <result property="nickName" column="nickName" />
-   </resultMap> -->
-  
-  <!-- 모든 인생문장 가져오기 -->
-  <select id="getAllSenten" resultType="com.sentence.domain.SentenceVO" >
-	  	select g.*, m.nickName 
-	  	from greatSentence g, memberSignup m 
-	  	where g.id = m.id 
-	  	and greatContentStatus = 1
-	  	order by greatReg DESC  
-  </select>
-  	
-  	
 
-  	
-  	
-  </mapper>
+<mapper namespace="com.sentence.persistence.GreatMapper">
+
+
+
+<!-- 페이징 없는 버전
+	 모든 인생문장 가져오기  -->
+	<select id="getAllSentenceMain" resultType="com.sentence.domain.SentenceVO">
+		select g.*, m.nickName
+		from greatSentence g, memberSignup m
+		where g.id = m.id
+		and greatContentStatus = 1
+		order by greatReg DESC
+	</select>
+	
+	
+	<!--   sql : 쿼리문을 변수에 담아서 필요할때 마다 꺼내쓸 수 있음 
+	<sql id="search">
+		<trim prefix="(" suffix=") and " prefixOverrides="or">
+			 	<foreach item="sel" collection="selArr">
+			 		<trim prefix="or">
+				 		<choose>
+				 			<when test="sel =='T'.toString()" >
+				 				nickName like '%'||#{keyword}||'%'
+				 			</when>
+			 				<when test="sel =='C'.toString()" >
+				 				greatContent like '%'||#{keyword}||'%'
+				 			</when>
+			 				<when test="sel =='W'.toString()" >
+				 				greatBookTitle like '%'||#{keyword}||'%'
+				 			</when>
+				 		</choose>
+			 		</trim>
+			 	</foreach>
+	 	</trim>
+	</sql>
+	-->
+
+
+	<select id="getAllSenten" resultType="com.sentence.domain.SentenceVO">
+		<![CDATA[  
+		select great_no, id, greatContent, greatImg, greatIsbn, greatBookTitle, greatLikeCount, greatContentStatus,greatReg, nickName 
+			from 
+			(select rownum r, great_no, id, nickName, greatContent, greatImg, greatIsbn, greatBookTitle, greatLikeCount, greatContentStatus,greatReg
+			 	from 
+                ( select g.*, m.nickName
+                    from greatSentence g, memberSignup m
+                    where 
+                    g.id = m.id and g.greatContentStatus = 1
+			 	order by great_no DESC
+                )
+			 	where 
+			 		rownum <= #{pageNum} * #{listQty}
+			  )
+			 where r > (#{pageNum} - 1) * #{listQty}
+		]]>
+	</select>
+	
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from greatSentence
+		where greatContentStatus = 1
+	</select>
+
+
+	<!-- 인생문장 -->
+	<select id="getTopSentence" resultType="com.sentence.domain.SentenceVO">
+		select g.*, m.nickName
+		from greatSentence g, memberSignup m
+		where g.id = m.id
+		and greatContentStatus = 1
+		order by greatLikeCount DESC
+	</select>
+
+
+	<!-- id에 맞는 인생문장 가져오기 -->
+	<select id="getAllMemSen" resultType="com.sentence.domain.SentenceVO">
+		select * from greatSentence where id=#{id} and (greatContentStatus = 1 or greatContentStatus = 0)
+	</select>
+
+
+	<!-- 회원이 찜한 인생문장 가져오기  -->	
+	<select id="getMemLikeSentence" resultType="com.sentence.domain.SentenceVO">
+		select l.*, g.greatcontent, g.greatimg, g.greatisbn, g.greatbooktitle, g.greatlikecount, g.greatcontentstatus, g.greatreg ,m.nickName
+		from greatSentence g, memberSignup m, greatSentenceLike l
+		where g.id = m.id and l.great_no=g.great_no
+		and greatContentStatus = 1 and l.id = #{id}
+		order by greatReg DESC
+	</select>
+
+
+	<!-- 리스트 넘 주고 인생문장 정보 가져오기 -->
+	<select id="getOneGreat" resultType="com.sentence.domain.SentenceVO">
+		select g.*, m.nickName
+		from greatSentence g, memberSignup m
+		where g.id = m.id
+		and (greatContentStatus = 1 or greatContentStatus = 0)
+		and great_no = #{great_no}
+		order by greatReg DESC
+	</select>
+
+
+	<!-- 인생문장 추가 -->
+	<insert id="addSenten">
+		insert into greatSentence(great_no, id, greatContent, greatImg, greatIsbn, greatBookTitle, greatContentStatus)
+		values(great_no_seq.nextval, #{id}, #{greatContent}, #{greatImg}, #{greatIsbn}, #{greatBookTitle}, #{greatContentStatus})
+	</insert>
+
+
+	<!-- 인생문장 수정 -->
+	<update id="modifyGreat">
+		update greatSentence set greatContent=#{greatContent},
+		greatIsbn=#{greatIsbn}, greatBookTitle=#{greatBookTitle},
+		greatContentStatus=#{greatContentStatus}
+		<if test="greatImg != null">
+			,greatImg=#{greatImg}
+		</if>
+		where great_no=#{great_no}
+	</update>
+
+
+	<!-- 인생문장 삭제 처리 (상태값 -1로 변경) -->
+	<update id="deleteGreat">
+		update greatSentence set greatContentStatus = -1
+		where great_no=#{great_no}
+	</update>
+
+
+	<!-- 인생문장 좋아요 count +1 -->
+	<update id="greatAddCount">
+		update greatSentence set greatLikeCount= greatLikeCount + 1
+		where great_no=#{great_no}
+	</update>
+	
+	<!-- 인생문장 좋아요 -1 -->
+	<update id="greatMinusCount">
+		update greatSentence set greatLikeCount= greatLikeCount- 1
+		where great_no=#{great_no}
+	</update>
+
+
+	<!-- 인생문장 좋아요 요청 ( 좋아요 테이블에 추가) -->
+	<insert id="likeGreat">
+		insert into greatSentenceLike(great_no, id)
+		values(#{great_no}, #{id})
+	</insert>
+	
+	<!-- 인생문장 좋아요 취소 ( 좋아요 테이블에 삭제) -->
+	<delete id="likeCancleGreat">
+		delete from greatSentenceLike
+		where great_no = #{great_no} and id=#{id}
+	</delete>
+
+
+	<!-- 문장 카운트 가져오기 -->
+	<select id="getCount" resultType="int">
+		select greatLikeCount from
+		greatSentence
+		where great_no = #{great_no}
+	</select>
+
+	<!-- 회원의 인생문장 좋아요한 리스트 번호  -->
+	<select id="getGreatListNum" resultType="int">
+		select great_no from
+		greatSentenceLike
+		where id=#{id}
+	</select>
+
+</mapper>

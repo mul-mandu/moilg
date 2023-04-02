@@ -27,8 +27,14 @@ public interface MemberMapper {
    //회원 관심사 저장
    //public MemberInterVO addInter(String id);
    
+   //회원 관심사 갯수 가져오기
+   public int selInterCount(String id);
+   
    //회원 관심사 저장
    public int insertInter(@Param("keyword_no")int internum,  @Param("id") String id);
+   
+   //회원 관심사 삭제
+   public int delInter(String id);
    
    //회원 mbti 정보 update
    public int updateMemMbti(MemberVO member);
@@ -65,6 +71,9 @@ public interface MemberMapper {
    
    // 아이디 중복확인
    public int idCheck(MemberVO vo);
+   
+   // 아이디 중복확인 
+   public int checkStatus(MemberVO vo);
    
    // 닉네임 중복확인
    public int nickNameCheck(MemberVO vo);
@@ -172,5 +181,13 @@ public interface MemberMapper {
    
    // mbti에 해당하는 플리 가져오기
    public List<BookListVO> getMbtiPLlist(@Param("mbti") String mbti);
+   
+   
+   // 북플리 찜할때 count +1 하기
+   public int addBPCount (@Param("list_no") int list_no);
+   
+   
+   // 북플리 찜하기 해제하면 count -1 하기;
+   public int cancelBPCount(@Param("list_no") int list_no);
    
 }

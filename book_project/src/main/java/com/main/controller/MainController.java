@@ -22,6 +22,8 @@ import com.member.service.MemberService;
 import com.member.service.domain.CustomUser;
 import com.mypage.controller.MypageController;
 import com.mypage.service.MypageService;
+import com.sentence.domain.SentenceVO;
+import com.sentence.service.GreatService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -34,6 +36,7 @@ public class MainController {
    @Autowired private MemberService service;
    @Autowired private MypageService myService;
    @Autowired private MypageController mypageController;
+   @Autowired private GreatService greatService;
    
    @GetMapping("main")
    public void main(Model model, Authentication auth) {
@@ -88,9 +91,15 @@ public class MainController {
       
       if(auth == null) {
 
-      // 전체 북리스트 뿌리기
-      List<BookListVO> vo = mainService.getAllPL();
+		/*
+		 * // 전체 북리스트 뿌리기 List<BookListVO> vo = mainService.getAllPL();
+		 * model.addAttribute("playList",vo);
+		 */
+      
+      // 인기순으로 리스트 뿌리기
+      List<BookListVO> vo = mainService.getBestPL();
       model.addAttribute("playList",vo);
+      
       
       // 장르 전체 북리스트 뿌리기 
       allGenreNo = mainService.getGenreAll(); //장르 전체 list_no
@@ -123,9 +132,14 @@ public class MainController {
       
       //로그인 했을 시,
    }else if(auth != null) {
-         // 전체 북리스트 뿌리기
-         List<BookListVO> vo = mainService.getAllPL();
-         model.addAttribute("playList",vo);  
+		/*
+		 * // 전체 북리스트 뿌리기 List<BookListVO> vo = mainService.getAllPL();
+		 * model.addAttribute("playList",vo);
+		 */
+	   
+	      // 인기순으로 리스트 뿌리기
+	      List<BookListVO> vo = mainService.getBestPL();
+	      model.addAttribute("playList",vo);
       
          //선호 장르에 따른 북플리 뿌리기 
          log.info("************************main장르 처리 들어옴!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -242,6 +256,13 @@ public class MainController {
       
       }//if
       
+      
+      // 메인에 인생문장 뿌리기
+      List<SentenceVO> greatList = greatService.getAllSentenceMain();
+      model.addAttribute("great", greatList);
+      log.info("메인에 인생문장 뿌리기!!!");
+      
+      
   
 
    }//메서드 끝 
@@ -280,6 +301,13 @@ public class MainController {
       
     }//메서드 끝
 
+   
+   //MBTI 페이지 호출 (로그인 안 한 경우)
+   @GetMapping("mbtiNotLogin")
+   public void mbti() {
+
+   }//메서드 끝
+   
    
    
    //접근 불가페이지 호출

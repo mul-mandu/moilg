@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!-- header 복붙 -->
+    <%-- header 복붙 --%>
 <%@ include file="../includes/header.jsp" %>
 
 <script>
@@ -17,19 +17,19 @@
              type: "get",
              datatype: "JSON",
              success: function(result) {
-                console.log("ajax success");
-                console.log(result);
+                //console.log("ajax success");
+                //console.log(result);
                 for(let i=0 ; i < result.length ; i++){
-                     console.log("for문진입!!!");
+                     //console.log("for문진입!!!");
                      resultMemPLlist.push(result[i]);
                   }
-                  console.log(resultMemPLlist);
+                  //console.log(resultMemPLlist);
                 
                 setScrapBtn();  // 버튼 셋팅하는 함수 호출
              },
              error: function(e){
-                console.log("ajax error");
-                console.log(e);
+                //console.log("ajax error");
+                //console.log(e);
              }
           });
    }
@@ -38,11 +38,11 @@
       
      
      function setScrapBtn(){
-        console.log("setScrapBtn 호출됨!!!");  
+        //console.log("setScrapBtn 호출됨!!!");  
         var list_no = "${listNum}";  // 현재 플리의 리스트 번호
         var check = 0;   // 번호 있는지 없는지 체크할 변수
         
-        console.log("list_no : " + list_no);
+        //console.log("list_no : " + list_no);
         
         
         // 내가 찜한 리스트에 현재 플리가 있는지 체크
@@ -52,12 +52,12 @@
            }
         }
         
-        console.log("check : " + check);
+        //console.log("check : " + check);
         if(check == 0){  // 찜하지 않았으면
-           console.log("찜 안함 check : " + check);
+           //console.log("찜 안함 check : " + check);
            $("#scrapBtn_div").html("<button class='btn btn-primary mt-2' id='bookDTL_btn'> + 북플리 찜하기</button>");
         }else{   // 찜했으면
-           console.log("찜 함 check : " + check);
+           //console.log("찜 함 check : " + check);
            $("#scrapBtn_div").html("<button class='btn btn-secondary mt-2' id='cancelbookDTL_btn'> - 북플리 찜하기 해제</button>");
         } 
      }
@@ -66,7 +66,7 @@
 </script>
 
 <div class="container" id="bookitemDetails_con">
-   <div> <!-- 상단 이미지 / 제목 /  작가 / 버튼 등 -->
+   <div> <%-- 상단 이미지 / 제목 /  작가 / 버튼 등 --%>
         <div class="row">
            <div class="col-5">
               <img src="/resources/save/${oneBookPL.packCover}"  class="bPlistCover card" />
@@ -76,16 +76,30 @@
               <h2><b>${oneBookPL.bookPLTitle}</b></h2>
               <p>${booksList.size()}권</p>
               <c:if test="${oneBookPL.listStatus == 0}">
-                 <p>공개</p>
+              <div class="row">
+              	<div class="col">
+                 	<p>공개</p>
+              	</div>
+              	<div class="col">
+	                 <div class="shareBox">
+					            <a href="#" id="sns_urlCoby" class="btn_share_sns"  onclick="clip(); return false;">
+					                <img src="/resources/img/share.png" alt="링크 공유하기" id="shareImg"></a>
+					  </div>
+              	</div>
+              </div>
               </c:if>
               <c:if test="${oneBookPL.listStatus == 1}">
                  <p>비공개</p>
               </c:if>
+              
+          
               <hr />
-              <!-- 키워드 -->
-              <c:forEach var="keyword" items="${keywordList}">
-                    <span class="hashTag">${keyword.keyword}</span>
-              </c:forEach>
+              <%-- 키워드 --%>
+              <div class="keywords">
+	              <c:forEach var="keyword" items="${keywordList}">
+	              		<button type='button' class='keyWord_btn' disabled >${keyword.keyword}</button>
+	              </c:forEach>
+              </div>
               
               
               <br />
@@ -94,7 +108,7 @@
               <br />
              
             
-              <!-- 버튼 -->
+              <%-- 버튼 --%>
                 <sec:authorize access="isAuthenticated()">
                   <sec:authentication property="principal" var="princ" /> 
                      <input type="hidden" id="loginId" value="${princ.member.id}"/>
@@ -127,7 +141,7 @@
         
         
         
-      <!-- 체크박스 결과 담아서 내 리스트 추가 / 전체 선택 관련 -->
+      <%-- 체크박스 결과 담아서 내 리스트 추가 / 전체 선택 관련 --%>
    <br />
    <div id="bPlistBox" style="display: none;">
       <div style="position: relative;" >
@@ -150,7 +164,7 @@
       
       
       
-   </div> <!-- 상단 이미지 / 제목 /  작가 / 버튼 등 끝-->
+   </div> <%-- 상단 이미지 / 제목 /  작가 / 버튼 등 끝--%>
       <table id="listTable">
          <thead>
             <tr>
@@ -185,10 +199,10 @@
 
 
 
-<!--  북플레이 리스트 추가 모달!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-    <!--******* 부모 모달 ********  -->
+<%--  북플레이 리스트 추가 모달!!!!!!!!!!!!!!!!!!!!!!!!!!!--%>
+    <%--******* 부모 모달 ********  --%>
     <sec:authorize access="isAuthenticated()">
-      <div class="modal fade" id="addtoMyPL" aria-hidden="true" aria-labelledby="addtoMyPL" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal fade" id="addtoMyPL" aria-hidden="true" aria-labelledby="addtoMyPL" tabindex="-1"  data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
@@ -211,7 +225,7 @@
                        <table id="settingMemPLlist">
                           
                     </table>
-                    </div> <!-- div row 끝 -->
+                    </div> <%-- div row 끝 --%>
              </div>
             
             <div class="modal-footer">
@@ -222,7 +236,7 @@
       </div>
    </sec:authorize>
    <sec:authorize access="isAnonymous()">
-      <div class="modal fade" id="addtoMyPL" aria-hidden="true" aria-labelledby="addtoMyPL" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal fade" id="addtoMyPL" aria-hidden="true" aria-labelledby="addtoMyPL" tabindex="-1"  data-bs-keyboard="false">
          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                <div class="modal-header">
@@ -244,8 +258,8 @@
    
    
    
-   <!--******* + 새 북 플레이리스트 생성 모달 ********  -->
-   <div class="modal fade" id="newCreatePL" aria-hidden="true" aria-labelledby="newCreatePL" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+   <%--******* + 새 북 플레이리스트 생성 모달 ********  --%>
+   <div class="modal fade" id="newCreatePL" aria-hidden="true" aria-labelledby="newCreatePL" tabindex="-1"  data-bs-keyboard="false">
      <div class="modal-dialog modal-dialog-centered">
        <div class="modal-content">
          <div class="modal-header">
@@ -274,7 +288,7 @@
    
    
    
-      <!--******* 자식모달2 ********  -->
+      <%--******* 자식모달2 ********  --%>
    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
      <div class="modal-dialog modal-dialog-centered">
        <div class="modal-content">
@@ -303,11 +317,11 @@
        </div>
      </div>
    </div>
-<!--  북플레이 리스트 추가 모달 END !!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<%--  북플레이 리스트 추가 모달 END !!!!!!!!!!!!!!!!!!!!!!!!!!!--%>
 
 
 
-<!-- 삭제요청 눌렀을 때 모달  -->
+<%-- 삭제요청 눌렀을 때 모달  --%>
 <div class="modal fade"  id="cancelmodal" tabindex="-1" aria-hidden="true" aria-labelledby="cancelmodal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -328,7 +342,7 @@
 
 
 
-<!-- 삭제요청 완료 때 모달  -->
+<%-- 삭제요청 완료 때 모달  --%>
 <div class="modal fade"  id="successCancelmodal" tabindex="-1" aria-hidden="true" aria-labelledby="cancelmodal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -355,7 +369,7 @@
 
 
 
-<!-- 책추가 완료 때 모달  -->
+<%-- 책추가 완료 때 모달  --%>
 <div class="modal fade"  id="successAddBooksmodal" tabindex="-1" aria-hidden="true" aria-labelledby="cancelmodal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -382,7 +396,7 @@
    
    
  
- <!-- 찜하기 완료 때 모달  -->
+<%-- 찜하기 완료 때 모달  --%>
 <div class="modal fade"  id="successScrap" tabindex="-1" aria-hidden="true" aria-labelledby="successScrap">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -401,7 +415,7 @@
 </div>
 
 
- <!-- 찜하기 취소 완료때 모달  -->
+<%-- 찜하기 취소 완료때 모달  --%>
 <div class="modal fade"  id="successCancelScrap" tabindex="-1" aria-hidden="true" aria-labelledby="successScrap">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -420,17 +434,17 @@
 </div>
    
    
-  <!-- ************************************ 스크립트!!!!!!!!!!!!!!!! ******************** --> 
+  <%-- ************************************ 스크립트!!!!!!!!!!!!!!!! ******************** --%> 
   <script>
   
       // 이 북플리를 나의 목록에 추가 버튼 눌렀을 시 
       $("#scrapBtn_div").on('click', "#bookDTL_btn",function(){
-         console.log("북플리 나의목록에 추가 버튼 클릭!!");
+         //console.log("북플리 나의목록에 추가 버튼 클릭!!");
          
             var list_no = ${listNum}; // 현재 리스트 번호 보내기
             var id = $("#loginId").val();     // 로그인한 아이디 보내기
             let bookListReqData = { 'id': id, 'list_no': list_no};
-            console.log(bookListReqData);
+            //console.log(bookListReqData);
             
             // 북 플레이 찜하기!!
             $.ajax({
@@ -442,15 +456,15 @@
                      xhr.setRequestHeader(header, token);
                   },
                   success: function(result){
-                      console.log("북 플레이리스트 찜하기 요청 성공!!!!!");
-                      console.log(result);
+                      //console.log("북 플레이리스트 찜하기 요청 성공!!!!!");
+                      //console.log(result);
                       $("#successScrap").modal("show");
                       $("#bookDTL_btn").hide();
                       $("#scrapBtn_div").html("<button class='btn btn-secondary mt-2' id='cancelbookDTL_btn'> - 북플리 찜하기 해제</button>");
                    },
                    error: function(e){
-                      console.log("북 플레이 리스트 찜하기 요청 에러......");
-                      console.log(e);
+                      //console.log("북 플레이 리스트 찜하기 요청 에러......");
+                      //console.log(e);
                    }
             });
 
@@ -461,12 +475,12 @@
          
    // 찜하기 해제 버튼 이벤트 처리  
    $("#scrapBtn_div").on('click', "#cancelbookDTL_btn",function(){
-         console.log("추가한 북플리 취소 버튼 클릭!!");
+         //console.log("추가한 북플리 취소 버튼 클릭!!");
          
             var list_no = ${listNum}; // 현재 리스트 번호 보내기
             var id = $("#loginId").val();     // 로그인한 아이디 보내기
             let bookListReqData = {'id': id, 'list_no': list_no};
-            console.log(bookListReqData);
+            //console.log(bookListReqData);
 
             // 북 플레이 찜하기 취소!!!
             $.ajax({
@@ -478,15 +492,15 @@
                      xhr.setRequestHeader(header, token);
                   },
                   success: function(result){
-                      console.log("북 플레이리스트 찜하기 요청 성공!!!!!");
-                      console.log(result);
+                     // console.log("북 플레이리스트 찜하기 요청 성공!!!!!");
+                      //console.log(result);
                       $("#successCancelScrap").modal("show");
                       $("#cancelbookDTL_btn").hide();
                       $("#scrapBtn_div").html("<button class='btn btn-primary mt-2' id='bookDTL_btn'> + 북플리 찜하기</button>");
                    },
                    error: function(e){
-                      console.log("북 플레이 리스트 찜하기 요청 에러......");
-                      console.log(e);
+                     // console.log("북 플레이 리스트 찜하기 요청 에러......");
+                     // console.log(e);
                    }
             });
 
@@ -515,13 +529,13 @@
                   xhr.setRequestHeader(header, token);
                },
                success: function(result){
-                   console.log("북 플레이 리스트 삭제 요청 성공!!!!!");
-                   console.log(result);
+                   //console.log("북 플레이 리스트 삭제 요청 성공!!!!!");
+                   //console.log(result);
                    $("#successCancelmodal").modal("show");
                 },
                 error: function(e){
-                   console.log("북 플레이 리스트 삭제 요청 에러......");
-                   console.log(e);
+                   //console.log("북 플레이 리스트 삭제 요청 에러......");
+                   //console.log(e);
                 }
          });
       });
@@ -544,10 +558,10 @@
            var title = trTag.find("#title").text();
            var author = trTag.find("#author").text();
            
-            console.log(isbn);
-            console.log(imgVal);
-            console.log(title);
-            console.log(author);
+            //console.log(isbn);
+            //console.log(imgVal);
+            //console.log(title);
+            //console.log(author);
             
             isbnList.push(isbn);
             imgValList.push(imgVal);
@@ -564,10 +578,10 @@
                   }
                }
             }
-            console.log(isbnList);
-            console.log(imgValList);
-            console.log(titleList);
-            console.log(authorList);
+            //console.log(isbnList);
+            //console.log(imgValList);
+            //console.log(titleList);
+            //console.log(authorList);
          var selectVal = isbnList.length;
          $('#countVal').html(selectVal);
             
@@ -596,7 +610,7 @@
          }else{
             //var id = $("#loginId").val();     // 로그인한 아이디 보내기
          
-         console.log("로그인 아이디 : " + id);
+         //console.log("로그인 아이디 : " + id);
          $("#addtoMyPL").modal("show");
          $("#selecBooks").empty();
          
@@ -605,7 +619,7 @@
             showBooks = "<span>";
             showBooks += "<b>"+titleList[i]+"</b></span>";
          }//for문
-            console.log(showBooks);
+            //console.log(showBooks);
             $("#selecBooks").html(showBooks);
          
             // 회원이가지고 있는 북플리리스트 요청
@@ -620,7 +634,7 @@
    var resultMemPLlist = new Array(); // 가져온 회원 플리 리스트 저장할 변수
    var ch = 0;
    function getMemPLlist(){
-      console.log("회원이 가지고 있는 북플리 다 불러오기");
+      //console.log("회원이 가지고 있는 북플리 다 불러오기");
       
       
       $.ajax({
@@ -628,8 +642,8 @@
          type: "get",
          datatype: "JSON",
          success: function(result) {
-            console.log("ajax success");
-            console.log(result);
+            //console.log("ajax success");
+            //console.log(result);
             var resultMemPLlist = new Array();
                for(var i=0 ; i < result.length; i++){
                   resultMemPLlist.push({'list_no' : result[i].list_no, 'bookPLTitle': result[i].bookPLTitle, 'packCover' : result[i].packCover});
@@ -643,11 +657,11 @@
                   showList += "<td><input class='saveSelect' type='radio' name='saveSelect' value='"+resultMemPLlist[i].list_no +"'/> </td></tr>";
                   $("#settingMemPLlist").append(showList);
                }
-            console.log(resultMemPLlist);
+            //console.log(resultMemPLlist);
          },
          error: function(e){
-            console.log("ajax error");
-            console.log(e);
+            //console.log("ajax error");
+            //console.log(e);
             
          }
          
@@ -659,11 +673,11 @@
    var selectedListNum; 
    // 모달안에서 북플레이 리스트 선택했을 때 처리 메서드
      $("#settingMemPLlist").on("click", ".saveSelect",function(){
-             console.log("플레이리스트 선택 !!");
+             //console.log("플레이리스트 선택 !!");
         
        if($(this).is(":checked")){  // 체크 됐을때 
           selectedListNum = $(this).val();
-             console.log(selectedListNum);
+            // console.log(selectedListNum);
        }
      });
 
@@ -671,14 +685,14 @@
    
    // 모달 누르면 저장 하는 처리 메서드
    $("#saveBooks").on("click", function(){
-      console.log("저장 버튼 클릭!!");
+     // console.log("저장 버튼 클릭!!");
       
       var savePlBooks = new Array();
       
       for(let i=0 ; i<isbnList.length ; i++){
          savePlBooks.push({"list_no": selectedListNum ,"isbn" : isbnList[i], "bookTitle" : titleList[i], "author" :authorList[i], "bookCover" : imgValList[i]});
       }
-      console.log(savePlBooks);
+      //console.log(savePlBooks);
       
       $.ajax({
          type: "POST",
@@ -689,14 +703,14 @@
                xhr.setRequestHeader(header, token);
             },
             success: function(result){
-                console.log("책 추가 요청 성공!!!!!");
-                console.log(result);
+                //console.log("책 추가 요청 성공!!!!!");
+               // console.log(result);
                 $("#addtoMyPL").modal("hide");
                 $("#successAddBooksmodal").modal("show");
              },
              error: function(e){
-                console.log("책 추가 요청 에러......");
-                console.log(e);
+               // console.log("책 추가 요청 에러......");
+               // console.log(e);
              }
          
       });
@@ -707,7 +721,7 @@
    
    // 모달에서 새 플레이리스트 생성 버튼 메서드 처리
    $("#newPLcreate").on("click", function(){
-      console.log("새 플레이리스트 생성 버튼 클릭");
+     // console.log("새 플레이리스트 생성 버튼 클릭");
       
       $("#addtoMyPL").modal("hide");
       $("#newCreatePL").modal("show");
@@ -718,12 +732,12 @@
    var id = $("#loginId").val();     // 로그인한 아이디 보내기
    // 새플레이리스트 생성 모달에서 생성 버튼 처리
    $("#creatPLBtn").on("click", function(){
-      console.log("새 플레이리스트 생성 요청!!!");
+     // console.log("새 플레이리스트 생성 요청!!!");
       
       var listTitle = $("#bookPLtitle").val();
       var status =  parseInt($("#listStatus").val());
       var createPL = {"id" : id, "bookPLTitle" : listTitle, "listStatus" : status};
-      console.log("새 플레이리스트 생성 요청 : " + createPL );
+     // console.log("새 플레이리스트 생성 요청 : " + createPL );
       
       
       // 새 북 플레이 리스트 생성!!
@@ -737,15 +751,15 @@
                xhr.setRequestHeader(header, token);
             },
             success: function(result){
-                console.log("북 플레이 리스트 생성 요청 성공!!!!!");
-                console.log(result);
+                //console.log("북 플레이 리스트 생성 요청 성공!!!!!");
+                //console.log(result);
               $("#newCreatePL").modal("hide");
               getMemPLlist();
                $("#addtoMyPL").modal("show");
              },
              error: function(e){
-                console.log("북 플레이 리스트 생성 요청 에러......");
-                console.log(e);
+                //console.log("북 플레이 리스트 생성 요청 에러......");
+                //console.log(e);
              }
       });
       
@@ -753,7 +767,21 @@
    });
    
    
-   
+   function clip(){
+
+       var url = '';    // <a>태그에서 호출한 함수인 clip 생성
+       var textarea = document.createElement("textarea");  
+       //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
+       
+       document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
+       url = window.document.location.href;  //url에는 현재 주소값을 넣어줌
+       textarea.value = url;  // textarea 값에 url를 넣어줌
+       textarea.select();  //textarea를 설정
+       document.execCommand("copy");   // 복사
+       document.body.removeChild(textarea); //extarea 요소를 없애줌
+       
+       alert("링크가 복사되었습니다 📃"); //알림창
+   }
      
    
    
@@ -761,5 +789,5 @@
 
 
 
-<!-- footer 복붙 -->
+<%-- footer 복붙 --%>
 <%@ include file="../includes/footer2.jsp"%>

@@ -10,6 +10,12 @@
      select * from BookList where listStatus=0 order by list_no desc
   </select>
   
+    <!--  스크랩 카운트 순으로 북리스트 가져오기 -->
+  <select id="getBestPL" resultType="com.member.domain.BookListVO">
+     select * from BookList where listStatus=0 order by scrapCount desc
+  </select>
+  
+  
   <!-- 장르 전체 북리스트의 리스트넘 가져오기 -->
   <select id="getAllGenreListNo" resultType="int">
      select list_no from BookPLKeyword where keyword_no between 0 and 15

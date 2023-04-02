@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
@@ -8,32 +10,33 @@
 <html>
 <head>
    <meta charset="UTF-8">
-    <!-- security csrf 추가 -->
+    <%-- security csrf 추가 --%>
    <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
-    
-    
+    <%--
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     --%>
    <title>뭐읽지? 📚취향대로 골라주는 북플리!📚</title>
    
 
    
-<!-- bootstrap -->
+<%-- bootstrap --%>
 <link
    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
    rel="stylesheet"
    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
    crossorigin="anonymous">
 
-<!-- 폰트  -->
+<%-- 폰트  --%>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-<!-- style CSS  -->
+<%-- style CSS  --%>
 <link href="/resources/css/style.css" rel="stylesheet" type="text/css">
 
 
-<!-- js및 스크립트  -->
+<%-- js및 스크립트  --%>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" 
  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" 
  crossorigin="anonymous" 
@@ -49,12 +52,28 @@
 
  
 
- <!-- 아이콘  -->
+<%-- 아이콘  --%>
  <script src="https://kit.fontawesome.com/00f484499b.js" crossorigin="anonymous"></script>
  
  
- 
- 
+<%-- 파비콘 --%> 
+<link rel="apple-touch-icon" sizes="57x57" href="/resources/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/resources/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/resources/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/resources/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/resources/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/resources/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/resources/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/resources/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/resources/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/resources/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
+<link rel="manifest" href="/resources/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/resources/favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
   
   
   
@@ -136,7 +155,14 @@
       </div>
       <div class="d-flex align-items-center">
          <form class="w-100 me-3" role="search">
-            <a href="/search/titleSearch" id="search_button" ><img src="/resources/img/search_icon.png" width="30px" />검색하기</a>
+            <a href="/search/bookPLSearch" id="search_button" class="headerMenu">북플리/도서검색</a>
+            <a href="/gSentence/greatSentence" id="search_button" class="headerMenu">인생문장</a>
+            <sec:authorize access="isAnonymous()">
+          	  <a href="/main/mbtiNotLogin" id="search_button" class="headerMenu">도서유형검사</a>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+          	  <a href="/main/mbti" id="search_button" class="headerMenu">도서유형검사&ensp;</a>
+            </sec:authorize>
          </form>
 
 
@@ -146,7 +172,7 @@
             <sec:authorize access="isAnonymous()">
                <a href="#"
                   class="d-block link-dark text-decoration-none dropdown-toggle"
-                  data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/img/user.png" alt="profile" width="45" height="45"
+                  data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/img/user.png" alt="profile" id="profileImg"
                   class="rounded-circle">
                </a>
            </sec:authorize>
@@ -156,14 +182,14 @@
                <c:if test="${memPhoto eq null}" >
                   <a href="#"
                      class="d-block link-dark text-decoration-none dropdown-toggle"
-                     data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/img/user.png" alt="profile" width="45" height="45"
+                     data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/img/user.png" alt="profile" id="profileImg"
                      class="rounded-circle">
                   </a>
                </c:if>
                <c:if test="${memPhoto != null}" >
                   <a href="#"
                      class="d-block link-dark text-decoration-none dropdown-toggle"
-                     data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/save/${prin.member.photo }" alt="profile" width="45" height="45"
+                     data-bs-toggle="dropdown" aria-expanded="false"> <img src="/resources/save/${prin.member.photo }" id="profileImg" alt="profile"
                      class="rounded-circle">
                   </a>
                </c:if>
@@ -180,6 +206,13 @@
                 </form>
             </sec:authorize>
              
+             <li><hr class="dropdown-divider"></li>
+             
+           		<!-- 회원가입 분기처리 (로그아웃 하면 안 보이게) -->
+                <sec:authorize access="hasRole('ROLE_MEMBER')">
+                     <li><a class="dropdown-item" href="/signup/signupInter">관심사설정</a></li>
+               </sec:authorize>
+             
                <!-- mypage 분기 처리 -->
                <sec:authorize access="hasRole('ROLE_MEMBER')" > 
                    <li><button type="button" id="dropdown_btn" onclick="window.location='/mypage/memMypage'" >마이페이지</button></li>
@@ -187,12 +220,16 @@
                 <sec:authorize access="hasRole('ROLE_ADMIN')" > 
                    <li><button type="button" id="dropdown_btn" onclick="window.location='/mypage/adminMypage'" >마이페이지</button></li>
                 </sec:authorize>
-              <li><hr class="dropdown-divider"></li>
+              
+              
+
               
               <!-- 회원가입 분기처리 (로그인 하면 안 보이게) -->
                 <sec:authorize access="isAnonymous()">
                      <li><a class="dropdown-item" href="/signup/signup">회원가입</a></li>
                </sec:authorize>
+               
+
             </ul>
          </div>
       </div>
@@ -201,7 +238,7 @@
    
    
 
-    <!-- Modal -->
+    <%-- Modal --%>
          <div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
             <div class="modal-dialog modal-dialog-centered">
                <div class="modal-content">
@@ -245,7 +282,7 @@
  
    
    //토큰 , 헤더 변수담기
-      let token = $("meta[name='_csrf']").attr("content");
+   let token = $("meta[name='_csrf']").attr("content");
    let header = $("meta[name='_csrf_header']").attr("content");
    
    
@@ -264,7 +301,7 @@
    function login(){
       let username = $("#id").val();
       let password = $("#pw").val();
-      console.log("아이디 : " + username + "패스워드 :" +  password );
+      //console.log("아이디 : " + username + "패스워드 :" +  password );
       let logindata = {"username":username, "password":password};
       
       $.ajax({
@@ -277,11 +314,11 @@
             xhr.setRequestHeader(header, token);
             },
          success: function(data){
-            console.log(data);
+            //console.log(data);
             location.replace("/main/main")
          },
          error:function(xhr,status,error){
-            console.log('error:'+error);
+            //console.log('error:'+error);
          }
       });
    }//ajax끝

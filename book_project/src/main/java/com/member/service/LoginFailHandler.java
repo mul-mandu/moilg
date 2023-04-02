@@ -22,11 +22,12 @@ public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
     //AuthenticationException e -> 로그인 실패 시 예외에 대한 정보를 담고 있음.
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         log.info("login fail handler");
-
+        log.info("eeeeeeeeeeeeeeeeeeeeeeee" + e);
         String errorMessage;
-        if (e instanceof BadCredentialsException || e instanceof InternalAuthenticationServiceException){
+        
+        if (e instanceof BadCredentialsException){
             errorMessage="1"; //"아이디 또는 비밀번호가 맞지 않습니다.";
-        }else if (e instanceof UsernameNotFoundException){
+        }else if (e instanceof UsernameNotFoundException || e instanceof InternalAuthenticationServiceException){
             errorMessage="2"; //"존재하지 않는 아이디 입니다.";
         }
         else{

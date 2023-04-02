@@ -20,6 +20,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			throws IOException, ServletException {
 			
 		log.info("************************************************ logout handler 동작~~~~~~~~~~~~~~~~~~~~~~");
+		log.info("리퍼럴값!!!!!!!!!!!!!!!!!!!!!!!!!" + request.getHeader("referer"));
 		
 		//보던 페이지로 돌아가는 처리 (loginSeuccessHandler 와 동일)
 		//로그아웃 처리 성공 후 보던 곳으로 가기 위한 처리 
@@ -28,8 +29,11 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			-> request header에 담긴 referer 정보는 이전에 내가 보고 있던 페이지의 주소값을 저장해준다.
 			-> 그렇기 때문에 referer값으로 sendredirect를 해주면 로그아웃 처리후 보고 있던 페이지로 가는 효과를 줄수 있다!! 
 		*/
-		response.sendRedirect(request.getHeader("referer"));
-			
+		if(request.getHeader("referer").equals("/main/delMemLogout")) {
+			response.sendRedirect("main/main");
+		}else{
+			response.sendRedirect(request.getHeader("referer"));
+		}
 		
 		
 				
